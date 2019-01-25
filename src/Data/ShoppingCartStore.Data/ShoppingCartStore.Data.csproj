@@ -4,4 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShoppingCartStore.Data.Common\ShoppingCartStore.Data.Common.csproj" />
+    <ProjectReference Include="..\ShoppingCartStore.Models\ShoppingCartStore.Models.csproj" />
+  </ItemGroup>
+
 </Project>

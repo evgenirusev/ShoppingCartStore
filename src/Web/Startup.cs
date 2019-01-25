@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SoppingCartStore.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ShoppingCartStore.Data;
+using ShoppingCartStore.Data.Common.Repositories;
+using ShoppingCartStore.Data.Repositories;
+using ShoppingCartStore.Models;
+using SoppingCartStore.Web.Infrastructure.Extensions;
 
 namespace SoppingCartStore.Web
 {
@@ -35,16 +34,39 @@ namespace SoppingCartStore.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ShoppingCartStoreDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                    Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("ShoppingCartStore.Data")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-        }
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password = new PasswordOptions()
+                {
+                    RequiredLength = 4,
+                    RequiredUniqueChars = 1,
+                    RequireDigit = false,
+                    RequireLowercase = false,
+                    RequireNonAlphanumeric = false,
+                    RequireUppercase = false
+                };
+            });
+
+            services.AddIdentity<Customer, IdentityRole>()
+                            .AddDefaultUI()
+                            .AddDefaultTokenProviders()
+                            .AddEntityFrameworkStores<ShoppingCartStoreDbContext>()
+                            .AddDefaultTokenProviders();
+
+            services.AddAutoMapper();
+
+            // Add services using reflection
+            services.AddDomainServices();
+
+            // Repository services
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {

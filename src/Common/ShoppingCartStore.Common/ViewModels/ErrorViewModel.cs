@@ -1,11 +1,8 @@
-using System;
-
-namespace SoppingCartStore.Web.Models
+﻿namespace ShoppingCartStore.Common.ViewModels
 {
     public class ErrorViewModel
     {
         public string RequestId { get; set; }
-
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }

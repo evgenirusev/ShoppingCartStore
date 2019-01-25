@@ -8,8 +8,17 @@
 
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\ShoppingCartStore.Common\ShoppingCartStore.Common.csproj" />
+    <ProjectReference Include="..\Data\ShoppingCartStore.Data\ShoppingCartStore.Data.csproj" />
+    <ProjectReference Include="..\Data\ShoppingCartStore.Models\ShoppingCartStore.Models.csproj" />
+    <ProjectReference Include="..\Services\ShoppingCartStore.Services.DataServices\ShoppingCartStore.Services.DataServices.csproj" />
   </ItemGroup>
 
 </Project>
