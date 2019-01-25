@@ -11,10 +11,31 @@
         {
         }
 
-        public DbSet<Customer> Clients { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Item> Items { get; set; }
+
+        public DbSet<Cart> Carts{ get; set; }
+
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Item>()
+                .HasOne(i => i.Cart)
+                .WithMany(c => c.Items)
+                .HasForeignKey(i => i.CartId);
+
+            builder.Entity<Item>()
+                .HasOne(i => i.Product)
+                .WithOne(c => c.Item)
+                .HasForeignKey<Item>(i => i.ProductId);
+
+            builder.Entity<Cart>()
+                .HasOne(c => c.Customer)
+                .WithOne(c => c.Cart)
+                .HasForeignKey<Cart>(b => b.CustomerId);
+
             base.OnModelCreating(builder);
         }
     }

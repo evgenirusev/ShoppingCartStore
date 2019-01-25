@@ -10,7 +10,7 @@ using ShoppingCartStore.Data;
 namespace ShoppingCartStore.Data.Migrations
 {
     [DbContext(typeof(ShoppingCartStoreDbContext))]
-    [Migration("20190125142631_initial")]
+    [Migration("20190125180123_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,6 +131,22 @@ namespace ShoppingCartStore.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ShoppingCartStore.Models.Cart", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CustomerId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique()
+                        .HasFilter("[CustomerId] IS NOT NULL");
+
+                    b.ToTable("Carts");
+                });
+
             modelBuilder.Entity("ShoppingCartStore.Models.Customer", b =>
                 {
                     b.Property<string>("Id")
@@ -139,6 +155,8 @@ namespace ShoppingCartStore.Data.Migrations
                     b.Property<int>("AccessFailedCount");
 
                     b.Property<decimal>("Balance");
+
+                    b.Property<string>("CartId");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -184,6 +202,46 @@ namespace ShoppingCartStore.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("ShoppingCartStore.Models.Item", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CartId");
+
+                    b.Property<string>("ProductId");
+
+                    b.Property<int>("Quantity");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique()
+                        .HasFilter("[ProductId] IS NOT NULL");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("ShoppingCartStore.Models.Product", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ItemId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<decimal>("Price");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -227,6 +285,24 @@ namespace ShoppingCartStore.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ShoppingCartStore.Models.Cart", b =>
+                {
+                    b.HasOne("ShoppingCartStore.Models.Customer", "Customer")
+                        .WithOne("Cart")
+                        .HasForeignKey("ShoppingCartStore.Models.Cart", "CustomerId");
+                });
+
+            modelBuilder.Entity("ShoppingCartStore.Models.Item", b =>
+                {
+                    b.HasOne("ShoppingCartStore.Models.Cart", "Cart")
+                        .WithMany("Items")
+                        .HasForeignKey("CartId");
+
+                    b.HasOne("ShoppingCartStore.Models.Product", "Product")
+                        .WithOne("Item")
+                        .HasForeignKey("ShoppingCartStore.Models.Item", "ProductId");
                 });
 #pragma warning restore 612, 618
         }
