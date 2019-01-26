@@ -22,9 +22,9 @@
                     <td>@product.Name</td>
                     <td>@product.Price</td>
                     <td>
-                        <a asp-action="AddToCart" asp-route-id="@product.Id" asp-controller="Cart">
+                        <form asp-action="AddToCart" asp-route-id="@product.Id" asp-controller="Cart">
                             <button class="btn btn-warning">Add to cart</button>
-                        </a>
+                        </form>
                     </td>
                 </tr>
             }
