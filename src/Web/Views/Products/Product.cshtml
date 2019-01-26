@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ProductViewModel>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+
+<h1>@ViewData["Title"]</h1>
+<hr class="hr-2"/>
+@if (Model.Count() > 0)
+{
+    <table class="table table-hover table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>
+                        <a asp-action="AddToCart" asp-route-id="@product.Id" asp-controller="Cart">
+                            <button class="btn btn-warning">Purchase</button>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h4><i>There are no credit assets registered yet. Consider using administrator credentials to create assets.</i></h4>
+}

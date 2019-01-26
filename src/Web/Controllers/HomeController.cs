@@ -1,14 +1,15 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using ShoppingCartStore.Common.Constants;
 using ShoppingCartStore.Common.ViewModels;
 
 namespace SoppingCartStore.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Home()
         {
-            return View();
+            return this.RedirectToAction(ActionConstants.Index, ControllerConstants.Products);
         }
 
         public IActionResult Privacy()
