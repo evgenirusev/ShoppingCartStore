@@ -2,32 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ShoppingCartStore.Common.BindingModels.Product;
 using ShoppingCartStore.Common.ViewModels.Product;
 using ShoppingCartStore.Models;
+using ShoppingCartStore.Services.DataServices;
 
 namespace SoppingCartStore.Web.Controllers
 {
     public class ProductsController : Controller
     {
-        public IActionResult Index()
+        private IProductService _productService;
+
+        public ProductsController(IProductService productService)
         {
-            List<ProductViewModel> products = new List<ProductViewModel>();
+            _productService = productService;
+        }
 
-            ProductViewModel testProductOne = new ProductViewModel();
-            testProductOne.Id = "1";
-            testProductOne.Name = "Name One";
-            testProductOne.Price = 4.99M;
-
-            ProductViewModel testProductTwo = new ProductViewModel();
-            testProductTwo.Id = "2";
-            testProductTwo.Name = "Name Two";
-            testProductTwo.Price = 8.99M;
-
-            products.Add(testProductOne);
-            products.Add(testProductTwo);
-
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<ProductViewModel> products = await _productService.GetAllProductsAsync();
             return View(products);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateProductBindingModel model)
+        {
+            await _productService.Create(model);
+            return this.RedirectToAction("Index", "Products");
         }
     }
 }

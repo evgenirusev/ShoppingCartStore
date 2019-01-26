@@ -1,0 +1,29 @@
+﻿@model CreateProductBindingModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row w-100 m-0">
+    <div class="offset-md-6 col-md-5 container w-100">
+        <h2>Create Asset</h2>
+        <hr class="hr-2" />
+        <form method="post">
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" type="text" required placeholder="Product name..." class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <hr />
+                <div>
+                    <input type="submit" value="Create" class="btn btn-warning btn-lg btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}

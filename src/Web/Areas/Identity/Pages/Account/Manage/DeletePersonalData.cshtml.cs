@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using SoppingCartStore.Models;
+using ShoppingCartStore.Models;
 
 namespace SoppingCartStore.Web.Areas.Identity.Pages.Account.Manage
 {

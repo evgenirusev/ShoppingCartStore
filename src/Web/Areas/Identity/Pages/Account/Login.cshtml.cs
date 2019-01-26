@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using SoppingCartStore.Models;
+using ShoppingCartStore.Models;
+using ShoppingCartStore.Services.DataServices;
 
 namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
 {
@@ -18,11 +19,17 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<Customer> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ICartService _cartService;
+        private readonly UserManager<Customer> _userManager;
 
-        public LoginModel(SignInManager<Customer> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<Customer> signInManager
+            , ILogger<LoginModel> logger, ICartService cartService,
+            UserManager<Customer> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _cartService = cartService;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -78,6 +85,10 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    // Persist session products
+                    // REFACTOR: decouple by implementing filter to handle the migration
+                    await this._cartService.MigrateSessionProducts(Input.Email, HttpContext.Session);
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

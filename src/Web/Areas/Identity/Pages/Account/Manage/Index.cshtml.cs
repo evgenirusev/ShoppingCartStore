@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using SoppingCartStore.Models;
+using ShoppingCartStore.Models;
 
 namespace SoppingCartStore.Web.Areas.Identity.Pages.Account.Manage
 {

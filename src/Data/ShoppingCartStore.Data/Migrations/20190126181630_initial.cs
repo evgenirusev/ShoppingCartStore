@@ -50,18 +50,20 @@ namespace ShoppingCartStore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    ImageURI = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
                     ItemId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,7 +191,7 @@ namespace ShoppingCartStore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Items",
+                name: "Item",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
@@ -199,17 +201,17 @@ namespace ShoppingCartStore.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.PrimaryKey("PK_Item", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Items_Carts_CartId",
+                        name: "FK_Item_Carts_CartId",
                         column: x => x.CartId,
                         principalTable: "Carts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Items_Products_ProductId",
+                        name: "FK_Item_Product_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Products",
+                        principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -261,13 +263,13 @@ namespace ShoppingCartStore.Data.Migrations
                 filter: "[CustomerId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_CartId",
-                table: "Items",
+                name: "IX_Item_CartId",
+                table: "Item",
                 column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Items_ProductId",
-                table: "Items",
+                name: "IX_Item_ProductId",
+                table: "Item",
                 column: "ProductId",
                 unique: true,
                 filter: "[ProductId] IS NOT NULL");
@@ -291,7 +293,7 @@ namespace ShoppingCartStore.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Items");
+                name: "Item");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -300,7 +302,7 @@ namespace ShoppingCartStore.Data.Migrations
                 name: "Carts");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Product");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

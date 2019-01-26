@@ -15,7 +15,7 @@
         public IActionResult AddToCart(string id)
         {
             this.cartService.AddToCart(null, id, HttpContext.Session);
-            return Json("Success");
+            return this.RedirectToAction("Index", "Products");
         }
     }
 }

@@ -8,5 +8,7 @@
         Task AddToCart(string userId, string productId, ISession session);
 
         int? GetProductCountFromSession(ISession session);
+
+        Task MigrateSessionProducts(string userEmail, ISession session);
     }
 }

@@ -2,14 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using ShoppingCartStore.Data.Common.Repositories;
 using ShoppingCartStore.Models;
 using SoppingCartStore.Common.Helpers;
 
 namespace ShoppingCartStore.Services.DataServices.Implementations
 {
-    public class CartService : ICartService
+    public class CartService : BaseService<Cart>, ICartService
     {
+        IItemService _itemService;
+
+        public CartService(IRepository<Cart> repository, IMapper mapper
+            , UserManager<Customer> userManager, IItemService itemService)
+            : base(repository, mapper, userManager)
+        {
+            _itemService = itemService;
+        }
+
         public async Task AddToCart(string userId, string productId, ISession session)
         {
             if (userId != null)
@@ -47,7 +59,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
                 }
                 SessionHelper.SetObjectAsJson(session, "cart", cart);
 
-                // Incrementing the counter
+                // Incrementing the product counter
                 int productCount = SessionHelper.GetObjectFromJson<int>(session, "productCount");
                 SessionHelper.SetObjectAsJson(session, "productCount", productCount + 1);
             }
@@ -69,6 +81,34 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
         public int? GetProductCountFromSession(ISession session)
         {
             return SessionHelper.GetObjectFromJson<int>(session, "productCount");
+        }
+
+        public async Task MigrateSessionProducts(string userEmail, ISession session)
+        {
+            var customer = await UserManager.FindByEmailAsync(userEmail);
+
+            var cartItems = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
+
+            foreach (var cartItem in cartItems)
+            {
+                await this._itemService
+                    .Save(cartItem.ProductId, cartItem.Quantity, cartItem.CartId);
+            }
+
+            await this.SaveCart(cartItems, customer.Id);
+
+            // Clear the session because our cart is now persisted
+            SessionHelper.SetObjectAsJson(session, "cart", null);
+            SessionHelper.SetObjectAsJson(session, "productCount", null);
+        }
+
+        private async Task SaveCart(ICollection<Item> items, string customerId)
+        {
+            var cart = new Cart();
+            cart.Items = items;
+            cart.CustomerId = customerId;
+            await this.Repository.AddAsync(cart);
+            await this.Repository.SaveChangesAsync();
         }
     }
 }

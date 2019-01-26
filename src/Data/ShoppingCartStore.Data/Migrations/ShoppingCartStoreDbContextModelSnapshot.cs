@@ -219,7 +219,7 @@ namespace ShoppingCartStore.Data.Migrations
                         .IsUnique()
                         .HasFilter("[ProductId] IS NOT NULL");
 
-                    b.ToTable("Items");
+                    b.ToTable("Item");
                 });
 
             modelBuilder.Entity("ShoppingCartStore.Models.Product", b =>
@@ -227,7 +227,11 @@ namespace ShoppingCartStore.Data.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("CreatedAt");
+
                     b.Property<string>("Description");
+
+                    b.Property<string>("ImageURI");
 
                     b.Property<string>("ItemId");
 
@@ -237,7 +241,7 @@ namespace ShoppingCartStore.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
