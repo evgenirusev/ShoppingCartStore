@@ -6,5 +6,7 @@
     public interface ICartService
     {
         Task AddToCart(string userId, string productId, ISession session);
+
+        int? GetProductCountFromSession(ISession session);
     }
 }

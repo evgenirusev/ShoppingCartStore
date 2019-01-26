@@ -29,6 +29,9 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
                 List<Item> cart = new List<Item>();
                 cart.Add(new Item(productId, 1));
                 SessionHelper.SetObjectAsJson(session, "cart", cart);
+
+                // Initial product count
+                SessionHelper.SetObjectAsJson(session, "productCount", 1);
             }
             else
             {
@@ -43,6 +46,10 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
                     cart.Add(new Item(productId, 1));
                 }
                 SessionHelper.SetObjectAsJson(session, "cart", cart);
+
+                // Incrementing the counter
+                int productCount = SessionHelper.GetObjectFromJson<int>(session, "productCount");
+                SessionHelper.SetObjectAsJson(session, "productCount", productCount + 1);
             }
         }
 
@@ -57,6 +64,11 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
                 }
             }
             return -1;
+        }
+
+        public int? GetProductCountFromSession(ISession session)
+        {
+            return SessionHelper.GetObjectFromJson<int>(session, "productCount");
         }
     }
 }
