@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace SoppingCartStore.Web.Helpers
+namespace SoppingCartStore.Common.Helpers
 {
     public static class SessionHelper
     {

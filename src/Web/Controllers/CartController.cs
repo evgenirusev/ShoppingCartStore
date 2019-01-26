@@ -1,11 +1,20 @@
 ﻿namespace SoppingCartStore.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using ShoppingCartStore.Services.DataServices;
 
     public class CartController : Controller
     {
-        public IActionResult AddToCart(string productId)
+        private ICartService cartService;
+
+        public CartController(ICartService cartService)
         {
+            this.cartService = cartService;
+        }
+
+        public IActionResult AddToCart(string id)
+        {
+            this.cartService.AddToCart(null, id, HttpContext.Session);
             return Json("Success");
         }
     }

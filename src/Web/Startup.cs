@@ -12,6 +12,7 @@ using ShoppingCartStore.Data.Common.Repositories;
 using ShoppingCartStore.Data.Repositories;
 using ShoppingCartStore.Models;
 using SoppingCartStore.Web.Infrastructure.Extensions;
+using System;
 
 namespace SoppingCartStore.Web
 {
@@ -67,7 +68,12 @@ namespace SoppingCartStore.Web
             // Repository services
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
-            services.AddSession();
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(7200);
+                options.Cookie.HttpOnly = true; // XSS security
+            });
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -89,6 +95,8 @@ namespace SoppingCartStore.Web
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

@@ -6,6 +6,12 @@
         {
         }
 
+        public Item(string productId, int quantity)
+        {
+            this.ProductId = productId;
+            this.Quantity = quantity;
+        }
+
         public int Quantity { get; set; }
 
         public string CartId { get; set; }
