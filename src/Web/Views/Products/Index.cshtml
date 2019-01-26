@@ -3,8 +3,6 @@
     ViewData["Title"] = "Products";
 }
 
-<h1>Products</h1>
-
 <h1>@ViewData["Title"]</h1>
 <hr class="hr-2"/>
 @if (Model.Count() > 0)
@@ -25,7 +23,7 @@
                     <td>@product.Price</td>
                     <td>
                         <a asp-action="AddToCart" asp-route-id="@product.Id" asp-controller="Cart">
-                            <button class="btn btn-warning">Purchase</button>
+                            <button class="btn btn-warning">Add to cart</button>
                         </a>
                     </td>
                 </tr>
@@ -35,5 +33,5 @@
 }
 else
 {
-    <h4><i>There are no credit assets registered yet. Consider using administrator credentials to create assets.</i></h4>
+    <h4><i>There are no products for sale yet.</i></h4>
 }

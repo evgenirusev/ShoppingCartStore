@@ -7,9 +7,9 @@ namespace SoppingCartStore.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Home()
+        public IActionResult Index()
         {
-            return this.RedirectToAction(ActionConstants.Index, ControllerConstants.Products);
+            return RedirectToAction("Index", "Products");
         }
 
         public IActionResult Privacy()
