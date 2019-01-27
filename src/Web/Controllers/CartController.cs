@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using ShoppingCartStore.Services.DataServices;
+    using System.Threading.Tasks;
 
     public class CartController : Controller
     {
@@ -14,7 +15,8 @@
 
         public IActionResult AddToCart(string id)
         {
-            this.cartService.AddToCart(null, id, HttpContext.Session);
+            // TODO: refactor
+            this.cartService.AddToCart(this.User.Identity.Name, id, HttpContext.Session);
             return this.RedirectToAction("Index", "Products");
         }
     }

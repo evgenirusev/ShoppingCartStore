@@ -13,7 +13,7 @@
 
         Task AddAsync(TEntity entity);
 
-        TEntity FindById(int id);
+        TEntity FindById(string id);
 
         void Update(TEntity entity);
 

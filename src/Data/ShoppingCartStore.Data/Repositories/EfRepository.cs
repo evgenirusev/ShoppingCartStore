@@ -42,7 +42,7 @@
 
         public void Dispose() => this.Context.Dispose();
 
-        public TEntity FindById(int id)
+        public TEntity FindById(string id)
         {
             return this.Context.Set<TEntity>().Find(id);
         }

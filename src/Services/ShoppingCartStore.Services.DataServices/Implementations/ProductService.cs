@@ -8,7 +8,6 @@
     using ShoppingCartStore.Data.Common.Repositories;
     using ShoppingCartStore.Models;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public class ProductService : BaseService<Product>, IProductService

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using ShoppingCartStore.Models;
 using ShoppingCartStore.Services.DataServices;
+using SoppingCartStore.Common.Helpers;
 
 namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
 {
@@ -87,8 +88,12 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
 
                     // Persist session products
-                    // REFACTOR: decouple by implementing filter to handle the migration
-                    await this._cartService.MigrateSessionProducts(Input.Email, HttpContext.Session);
+                    // REFACTOR: decouple by implementing filter to handle the cart migration
+                    var s = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+                    if (s != null)
+                    {
+                        await _cartService.MigrateSessionProducts(Input.Email, HttpContext.Session);
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

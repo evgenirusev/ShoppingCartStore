@@ -9,8 +9,8 @@ namespace ShoppingCartStore.Models
             this.Items = new List<Item>();
         }
 
-        public ICollection<Item> Items { get; set; }
-
+        public List<Item> Items { get; set; }
+        
         public string CustomerId { get; set; }
         public Customer Customer { get; set; }
     }

@@ -36,6 +36,10 @@
                 .WithOne(c => c.Cart)
                 .HasForeignKey<Cart>(b => b.CustomerId);
 
+            builder.Entity<Cart>()
+                .HasMany(c => c.Items)
+                .WithOne(i => i.Cart);
+
             base.OnModelCreating(builder);
         }
     }

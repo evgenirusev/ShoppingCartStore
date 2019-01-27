@@ -17,7 +17,7 @@ namespace SoppingCartStore.Web.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var viewModel = new CartComponentViewModel();
-            viewModel.ItemsCount = this.cartService.GetProductCountFromSession(HttpContext.Session);
+            // viewModel.ItemsCount = this.cartService.GetProductCountFromSession(HttpContext.Session);
             return View(viewModel);
         }
     }

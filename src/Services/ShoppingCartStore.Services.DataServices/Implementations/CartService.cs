@@ -22,9 +22,9 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             _itemService = itemService;
         }
 
-        public async Task AddToCart(string userId, string productId, ISession session)
+        public async Task AddToCart(string username, string productId, ISession session)
         {
-            if (userId != null)
+            if (username != null)
             {
                 // TODO: Implement
             }
@@ -87,28 +87,65 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
         {
             var customer = await UserManager.FindByEmailAsync(userEmail);
 
-            var cartItems = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
+            var persistedCart = this.Repository.FindById(customer.CartId);
 
-            foreach (var cartItem in cartItems)
+            if (persistedCart != null)
             {
-                await this._itemService
-                    .Save(cartItem.ProductId, cartItem.Quantity, cartItem.CartId);
+                await this.DeletePersistedCart(persistedCart);
             }
 
-            await this.SaveCart(cartItems, customer.Id);
+            var cartItems = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
+
+            foreach(var item in cartItems)
+            {
+                await _itemService.Save(item.ProductId, item.Quantity, item.CartId);
+            }
+
+            var persistedItems = await _itemService.All();
+
+            string persistedCartId = await this.SaveCart(persistedItems, customer.Id);
+
+            // Make the relation customer-cart uni-directional
+            customer.CartId = persistedCartId;
+            await this.UserManager.UpdateAsync(customer);
 
             // Clear the session because our cart is now persisted
             SessionHelper.SetObjectAsJson(session, "cart", null);
             SessionHelper.SetObjectAsJson(session, "productCount", null);
         }
 
-        private async Task SaveCart(ICollection<Item> items, string customerId)
+        private async Task<string> SaveCart(IEnumerable<Item> items, string customerId)
         {
             var cart = new Cart();
-            cart.Items = items;
+
+            foreach(var item in items)
+            {
+                cart.Items.Add(item);
+            }
+
             cart.CustomerId = customerId;
             await this.Repository.AddAsync(cart);
             await this.Repository.SaveChangesAsync();
+            return cart.Id;
+        }
+
+        private async Task DeletePersistedCart(Cart persistedCart)
+        {
+            var persistedItems = await _itemService.AllByCartId(persistedCart.Id);
+
+            foreach (var item in persistedItems)
+            {
+                await _itemService.Delete(item);
+            }
+
+            this.Repository.Delete(persistedCart);
+
+            await this.Repository.SaveChangesAsync();
+        }
+
+        public int? GetProductCountFromDb(ISession session)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using ShoppingCartStore.Data.Common.Repositories;
@@ -22,6 +24,21 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             item.CartId = cartId;
             await this.Repository.AddAsync(item);
             await this.Repository.SaveChangesAsync();
+        }
+
+        public async Task Delete(Item item)
+        {
+            this.Repository.Delete(item);
+        }
+        
+        public async Task<IEnumerable<Item>> All()
+        {
+            return this.Repository.All();
+        }
+
+        public async Task<IEnumerable<Item>> AllByCartId(string cartId)
+        {
+            return Repository.All().Where(x => x.CartId == cartId);
         }
     }
 }
