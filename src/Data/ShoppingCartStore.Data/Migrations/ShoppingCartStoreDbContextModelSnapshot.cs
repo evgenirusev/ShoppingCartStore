@@ -215,9 +215,7 @@ namespace ShoppingCartStore.Data.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("ProductId")
-                        .IsUnique()
-                        .HasFilter("[ProductId] IS NOT NULL");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Item");
                 });
@@ -232,8 +230,6 @@ namespace ShoppingCartStore.Data.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("ImageURI");
-
-                    b.Property<string>("ItemId");
 
                     b.Property<string>("Name");
 
@@ -303,8 +299,8 @@ namespace ShoppingCartStore.Data.Migrations
                         .HasForeignKey("CartId");
 
                     b.HasOne("ShoppingCartStore.Models.Product", "Product")
-                        .WithOne("Item")
-                        .HasForeignKey("ShoppingCartStore.Models.Item", "ProductId");
+                        .WithMany("Items")
+                        .HasForeignKey("ProductId");
                 });
 #pragma warning restore 612, 618
         }

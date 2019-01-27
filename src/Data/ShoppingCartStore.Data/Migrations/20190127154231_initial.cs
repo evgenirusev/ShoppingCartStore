@@ -58,8 +58,7 @@ namespace ShoppingCartStore.Data.Migrations
                     Description = table.Column<string>(nullable: true),
                     ImageURI = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    ItemId = table.Column<string>(nullable: true)
+                    CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -270,9 +269,7 @@ namespace ShoppingCartStore.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Item_ProductId",
                 table: "Item",
-                column: "ProductId",
-                unique: true,
-                filter: "[ProductId] IS NOT NULL");
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

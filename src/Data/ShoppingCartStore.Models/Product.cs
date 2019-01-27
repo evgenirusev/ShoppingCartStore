@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ShoppingCartStore.Models
 {
     public class Product : BaseModel
     {
+        public Product()
+        {
+            this.Items = new List<Item>();
+        }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -14,7 +20,6 @@ namespace ShoppingCartStore.Models
 
         public DateTime CreatedAt { get; set; }
 
-        public string ItemId { get; set; }
-        public Item Item { get; set; }
+        public ICollection<Item> Items { get; set; }
     }
 }

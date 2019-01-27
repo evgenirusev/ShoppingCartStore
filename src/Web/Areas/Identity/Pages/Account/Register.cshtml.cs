@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using ShoppingCartStore.Models;
+using ShoppingCartStore.Services.DataServices;
+using SoppingCartStore.Common.Helpers;
 
 namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
 {
@@ -20,17 +22,20 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
         private readonly UserManager<Customer> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ICartService _cartService;
 
         public RegisterModel(
             UserManager<Customer> userManager,
             SignInManager<Customer> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICartService cartService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _cartService = cartService;
         }
 
         [BindProperty]
@@ -82,6 +87,14 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    // Persist session products
+                    // REFACTOR: decouple by implementing filter to handle the cart migration
+                    var s = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
+                    if (s != null)
+                    {
+                        await _cartService.MigrateSessionProducts(Input.Email, HttpContext.Session);
+                    }
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);

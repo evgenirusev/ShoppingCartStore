@@ -1,7 +1,6 @@
 ﻿namespace ShoppingCartStore.Services.DataServices
 {
     using Microsoft.AspNetCore.Http;
-    using System;
     using System.Threading.Tasks;
 
     public interface ICartService
