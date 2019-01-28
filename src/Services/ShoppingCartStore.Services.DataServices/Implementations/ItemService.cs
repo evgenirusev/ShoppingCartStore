@@ -30,6 +30,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
         public async Task Delete(Item item)
         {
             this.Repository.Delete(item);
+            await this.Repository.SaveChangesAsync();
         }
         
         public async Task<IEnumerable<Item>> All()

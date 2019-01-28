@@ -31,7 +31,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             if (cart == null)
             {
                 var customer = await UserManager.FindByNameAsync(username);
-                var cartId = await this.CreateCart(customer.Id);
+                var cartId = await CreateCart(customer);
                 await _itemService.Create(productId, 1, cartId);
             }
             else
@@ -106,44 +106,45 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
                 await this.DeletePersistedCart(persistedCart);
             }
 
+            string newDbCartId = await this.CreateCart(customer);
+
             var cartItems = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
 
             foreach(var item in cartItems)
             {
-                await _itemService.Create(item.ProductId, item.Quantity, item.CartId);
+                await _itemService.Create(item.ProductId, item.Quantity, newDbCartId);
             }
-
-            string persistedCartId = await this.CreateCart(customer.Id);
-
-            // Make the relation customer-cart uni-directional
-            customer.CartId = persistedCartId;
-            await this.UserManager.UpdateAsync(customer);
 
             // Clear the session because our cart is now persisted
             SessionHelper.SetObjectAsJson(session, "cart", null);
             SessionHelper.SetObjectAsJson(session, "productCount", null);
         }
 
-        private async Task<string> CreateCart(string customerId)
+        private async Task<string> CreateCart(Customer cartCustomer)
         {
             var cart = new Cart();
-            cart.CustomerId = customerId;
+            cart.CustomerId = cartCustomer.Id;
+
             await this.Repository.AddAsync(cart);
             await this.Repository.SaveChangesAsync();
+
+            // Create Bidirectional relation
+            cartCustomer.CartId = cart.Id;
+            await this.UserManager.UpdateAsync(cartCustomer);
+
             return cart.Id;
         }
 
         private async Task DeletePersistedCart(Cart persistedCart)
         {
-            var persistedItems = await _itemService.AllByCartId(persistedCart.Id);
-
+            List<Item> persistedItems = (await _itemService.AllByCartId(persistedCart.Id)).ToList();
+            
             foreach (var item in persistedItems)
             {
                 await _itemService.Delete(item);
             }
 
             this.Repository.Delete(persistedCart);
-
             await this.Repository.SaveChangesAsync();
         }
 
