@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCartStore.Common.BindingModels.Product;
 using ShoppingCartStore.Common.ViewModels.Product;
-using ShoppingCartStore.Models;
 using ShoppingCartStore.Services.DataServices;
 
 namespace SoppingCartStore.Web.Controllers

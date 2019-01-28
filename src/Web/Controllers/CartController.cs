@@ -13,10 +13,17 @@
             this.cartService = cartService;
         }
 
-        public IActionResult AddToCart(string id)
+        public async Task<IActionResult> AddToCart(string id)
         {
-            // TODO: refactor
-            this.cartService.AddToCart(this.User.Identity.Name, id, HttpContext.Session);
+            if (this.User.Identity.IsAuthenticated)
+            {
+                await this.cartService.AddToPersistedCart(id, this.User.Identity.Name);
+            }
+            else
+            {
+                this.cartService.AddToSessionCart(id, HttpContext.Session);
+            }
+
             return this.RedirectToAction("Index", "Products");
         }
     }

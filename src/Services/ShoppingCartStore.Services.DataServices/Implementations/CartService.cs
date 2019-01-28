@@ -22,19 +22,30 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             _itemService = itemService;
         }
 
-        public async Task AddToCart(string username, string productId, ISession session)
+        public async Task AddToPersistedCart(string productId, string username)
         {
-            if (username != null)
+            var cart = this.FindByUsername(username);
+            var item = await _itemService.FindByProductId(productId);
+
+            if (cart == null)
             {
-                // TODO: Implement
+                // create cart
+                // create item
             }
             else
             {
-                StoreProductInSession(productId, session);
+                if (item != null)
+                {
+                    // item.count++
+                }
+                else
+                {
+                    // create item
+                }
             }
         }
 
-        private void StoreProductInSession(string productId, ISession session)
+        public async Task AddToSessionCart(string productId, ISession session)
         {
             if (SessionHelper.GetObjectFromJson<List<Item>>(session, "cart") == null)
             {
@@ -48,7 +59,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             else
             {
                 List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
-                int index = isExist(productId, session);
+                int index = doesExist(productId, session);
                 if (index != -1)
                 {
                     cart[index].Quantity++;
@@ -65,7 +76,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             }
         }
 
-        private int isExist(string id, ISession session)
+        private int doesExist(string id, ISession session)
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
             for (int i = 0; i < cart.Count; i++)
@@ -86,7 +97,6 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
         public async Task MigrateSessionProducts(string userEmail, ISession session)
         {
             var customer = await UserManager.FindByEmailAsync(userEmail);
-
             var persistedCart = this.Repository.FindById(customer.CartId);
 
             if (persistedCart != null)
@@ -146,6 +156,12 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
         public int? GetProductCountFromDb(ISession session)
         {
             throw new NotImplementedException();
+        }
+
+        private Cart FindByUsername(string username)
+        {
+            return this.Repository.All()
+                .Where(c => c.Customer.UserName == username).FirstOrDefault();
         }
     }
 }

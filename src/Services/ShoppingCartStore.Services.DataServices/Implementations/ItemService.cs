@@ -38,7 +38,12 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
 
         public async Task<IEnumerable<Item>> AllByCartId(string cartId)
         {
-            return Repository.All().Where(x => x.CartId == cartId);
+            return Repository.All().Where(i => i.CartId == cartId);
+        }
+
+        public async Task<Item> FindByProductId(string productId)
+        {
+            return Repository.All().FirstOrDefault(i => i.ProductId == productId);
         }
     }
 }
