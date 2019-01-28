@@ -10,7 +10,7 @@ using ShoppingCartStore.Data;
 namespace ShoppingCartStore.Data.Migrations
 {
     [DbContext(typeof(ShoppingCartStoreDbContext))]
-    [Migration("20190127154231_initial")]
+    [Migration("20190128153322_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

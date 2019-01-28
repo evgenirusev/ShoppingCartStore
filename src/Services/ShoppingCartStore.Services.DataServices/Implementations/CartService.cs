@@ -49,7 +49,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
 
         public async Task AddToSessionCart(string productId, ISession session)
         {
-            if (SessionHelper.GetObjectFromJson<List<Item>>(session, "cart") == null)
+            if (SessionHelper.GetObjectFromJson<int>(session, "productCount") == 0)
             {
                 List<Item> cart = new List<Item>();
                 cart.Add(new Item(productId, 1));
@@ -76,6 +76,18 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
                 int productCount = SessionHelper.GetObjectFromJson<int>(session, "productCount");
                 SessionHelper.SetObjectAsJson(session, "productCount", productCount + 1);
             }
+        }
+
+        private void AddItemsToSession(List<Item> items, ISession session)
+        {
+            List<Item> resultItems = new List<Item>();
+
+            foreach(var item in items)
+            {
+                resultItems.Add(item);
+            }
+
+            SessionHelper.SetObjectAsJson(session, "cart", resultItems);
         }
 
         private int doesExist(string id, ISession session)
@@ -162,6 +174,49 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
         {
             SessionHelper.SetObjectAsJson(session, "cart", null);
             SessionHelper.SetObjectAsJson(session, "productCount", 0);
+        }
+
+        public async Task<int> GetPersistedCartProductCount(string username, ISession session)
+        {
+            var cart = FindByUsername(username);
+
+            if (cart == null)
+            {
+                return 0;
+            }
+
+            var cartItems = await _itemService.AllByCartId(cart.Id);
+
+            int productCount = 0;
+
+            foreach (var item in cartItems)
+            {
+                productCount += item.Quantity;
+            }
+
+            return productCount;
+        }
+
+        public async Task ManageCartOnCustomerLogin(ISession session, string username)
+        {
+            var cartFromSession = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
+            if (cartFromSession != null)
+            {
+                await MigrateSessionProducts(username, session);
+            }
+            else
+            {
+                int productCount = await GetPersistedCartProductCount(username, session);
+                SessionHelper.SetObjectAsJson(session, "productCount", productCount);
+                
+                var persistedCart = FindByUsername(username);
+                var persistedItems = await _itemService.AllByCartId(persistedCart.Id);
+
+                if (persistedItems != null)
+                {
+                    AddItemsToSession(persistedItems.ToList(), session);
+                }
+            }
         }
     }
 }

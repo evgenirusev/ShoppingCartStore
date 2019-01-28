@@ -88,13 +88,7 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    // Persist session products
-                    // REFACTOR: decouple by implementing filter to handle the cart migration
-                    var s = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-                    if (s != null)
-                    {
-                        await _cartService.MigrateSessionProducts(Input.Email, HttpContext.Session);
-                    }
+                    await _cartService.ManageCartOnCustomerLogin(HttpContext.Session, Input.Email);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);

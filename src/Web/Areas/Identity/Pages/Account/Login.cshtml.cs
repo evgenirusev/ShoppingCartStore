@@ -87,13 +87,8 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
 
-                    // Persist session products
-                    // REFACTOR: decouple by implementing filter to handle the cart migration
-                    var s = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-                    if (s != null)
-                    {
-                        await _cartService.MigrateSessionProducts(Input.Email, HttpContext.Session);
-                    }
+                    await _cartService.ManageCartOnCustomerLogin(HttpContext.Session, Input.Email);
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

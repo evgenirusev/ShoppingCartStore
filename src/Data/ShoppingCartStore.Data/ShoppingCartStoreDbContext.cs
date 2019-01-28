@@ -26,15 +26,14 @@
                 .WithMany(c => c.Items)
                 .HasForeignKey(i => i.CartId);
 
-            builder.Entity<Item>()
-                .HasOne(i => i.Cart)
-                .WithMany(p => p.Items)
-                .HasForeignKey(i => i.CartId);
-
             builder.Entity<Cart>()
                 .HasOne(c => c.Customer)
                 .WithOne(c => c.Cart)
                 .HasForeignKey<Cart>(b => b.CustomerId);
+
+            builder.Entity<Product>()
+                .HasMany(p => p.Items)
+                .WithOne(i => i.Product);
 
             builder.Entity<Cart>()
                 .HasMany(c => c.Items)

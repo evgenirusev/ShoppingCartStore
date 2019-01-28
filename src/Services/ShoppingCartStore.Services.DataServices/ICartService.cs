@@ -14,5 +14,9 @@
         Task AddToSessionCart(string productId, ISession session);
 
         void ClearSessionCart(ISession session);
+
+        Task<int> GetPersistedCartProductCount(string username, ISession session);
+
+        Task ManageCartOnCustomerLogin(ISession session, string username);
     }
 }
