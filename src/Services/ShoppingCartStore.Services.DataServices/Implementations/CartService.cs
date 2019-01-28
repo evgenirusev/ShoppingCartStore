@@ -93,7 +93,15 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
 
         public int? GetProductCountFromSession(ISession session)
         {
-            return SessionHelper.GetObjectFromJson<int>(session, "productCount");
+            int? count = SessionHelper.GetObjectFromJson<int>(session, "productCount");
+            if (count != 0)
+            {
+                return count;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public async Task MigrateSessionProducts(string userEmail, ISession session)
@@ -114,10 +122,6 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             {
                 await _itemService.Create(item.ProductId, item.Quantity, newDbCartId);
             }
-
-            // Clear the session because our cart is now persisted
-            SessionHelper.SetObjectAsJson(session, "cart", null);
-            SessionHelper.SetObjectAsJson(session, "productCount", null);
         }
 
         private async Task<string> CreateCart(Customer cartCustomer)
@@ -148,15 +152,16 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             await this.Repository.SaveChangesAsync();
         }
 
-        public int? GetProductCountFromDb(ISession session)
-        {
-            throw new NotImplementedException();
-        }
-
         private Cart FindByUsername(string username)
         {
             return this.Repository.All()
                 .Where(c => c.Customer.UserName == username).FirstOrDefault();
+        }
+
+        public void ClearSessionCart(ISession session)
+        {
+            SessionHelper.SetObjectAsJson(session, "cart", null);
+            SessionHelper.SetObjectAsJson(session, "productCount", 0);
         }
     }
 }

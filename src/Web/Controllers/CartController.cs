@@ -19,10 +19,8 @@
             {
                 await this.cartService.AddToPersistedCart(id, this.User.Identity.Name);
             }
-            else
-            {
-                this.cartService.AddToSessionCart(id, HttpContext.Session);
-            }
+
+            await this.cartService.AddToSessionCart(id, HttpContext.Session);
 
             return this.RedirectToAction("Index", "Products");
         }

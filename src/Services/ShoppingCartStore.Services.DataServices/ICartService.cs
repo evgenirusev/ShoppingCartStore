@@ -7,12 +7,12 @@
     {
         int? GetProductCountFromSession(ISession session);
 
-        int? GetProductCountFromDb(ISession session);
-
         Task MigrateSessionProducts(string userEmail, ISession session);
 
         Task AddToPersistedCart(string productId, string username);
 
         Task AddToSessionCart(string productId, ISession session);
+
+        void ClearSessionCart(ISession session);
     }
 }

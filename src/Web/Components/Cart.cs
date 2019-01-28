@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using ShoppingCartStore.Common.ViewModels.Cart;
+using ShoppingCartStore.Models;
 using ShoppingCartStore.Services.DataServices;
 using System.Threading.Tasks;
 
@@ -7,17 +9,20 @@ namespace SoppingCartStore.Web.Components
 {
     public class Cart : ViewComponent
     {
-        private ICartService cartService;
+        private ICartService _cartService;
 
         public Cart(ICartService cartService)
         {
-            this.cartService = cartService;
+            this._cartService = cartService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var viewModel = new CartComponentViewModel();
-            // viewModel.ItemsCount = this.cartService.GetProductCountFromSession(HttpContext.Session);
+
+            viewModel.ItemsCount = _cartService
+                .GetProductCountFromSession(HttpContext.Session);
+
             return View(viewModel);
         }
     }
