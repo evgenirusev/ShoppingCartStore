@@ -295,11 +295,11 @@ namespace ShoppingCartStore.Data.Migrations
             modelBuilder.Entity("ShoppingCartStore.Models.Item", b =>
                 {
                     b.HasOne("ShoppingCartStore.Models.Cart", "Cart")
-                        .WithMany("Items")
+                        .WithMany()
                         .HasForeignKey("CartId");
 
                     b.HasOne("ShoppingCartStore.Models.Product", "Product")
-                        .WithMany("Items")
+                        .WithMany()
                         .HasForeignKey("ProductId");
                 });
 #pragma warning restore 612, 618

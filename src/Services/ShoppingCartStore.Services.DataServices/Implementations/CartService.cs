@@ -84,6 +84,9 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
 
             foreach(var item in items)
             {
+                // To avoid JSON "Error Self referencing loop"
+                item.Cart = null;
+
                 resultItems.Add(item);
             }
 

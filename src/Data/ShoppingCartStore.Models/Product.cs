@@ -7,7 +7,6 @@ namespace ShoppingCartStore.Models
     {
         public Product()
         {
-            this.Items = new List<Item>();
         }
 
         public string Name { get; set; }
@@ -19,7 +18,5 @@ namespace ShoppingCartStore.Models
         public decimal Price { get; set; }
 
         public DateTime CreatedAt { get; set; }
-
-        public ICollection<Item> Items { get; set; }
     }
 }
