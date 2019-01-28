@@ -24,23 +24,25 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
 
         public async Task AddToPersistedCart(string productId, string username)
         {
-            var cart = this.FindByUsername(username);
-            var item = await _itemService.FindByProductId(productId);
+            var cart = FindByUsername(username);
+            var item = await _itemService
+                .FindByIdAndCustomerUsername(productId, username);
 
             if (cart == null)
             {
-                // create cart
-                // create item
+                var customer = await UserManager.FindByNameAsync(username);
+                var cartId = await this.CreateCart(customer.Id);
+                await _itemService.Create(productId, 1, cartId);
             }
             else
             {
                 if (item != null)
                 {
-                    // item.count++
+                    await _itemService.UpdateItemProductQuantity(item.Id, 1);
                 }
                 else
                 {
-                    // create item
+                    await _itemService.Create(productId, 1, cart.Id);
                 }
             }
         }
@@ -108,12 +110,10 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
 
             foreach(var item in cartItems)
             {
-                await _itemService.Save(item.ProductId, item.Quantity, item.CartId);
+                await _itemService.Create(item.ProductId, item.Quantity, item.CartId);
             }
 
-            var persistedItems = await _itemService.All();
-
-            string persistedCartId = await this.SaveCart(persistedItems, customer.Id);
+            string persistedCartId = await this.CreateCart(customer.Id);
 
             // Make the relation customer-cart uni-directional
             customer.CartId = persistedCartId;
@@ -124,15 +124,9 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             SessionHelper.SetObjectAsJson(session, "productCount", null);
         }
 
-        private async Task<string> SaveCart(IEnumerable<Item> items, string customerId)
+        private async Task<string> CreateCart(string customerId)
         {
             var cart = new Cart();
-
-            foreach(var item in items)
-            {
-                cart.Items.Add(item);
-            }
-
             cart.CustomerId = customerId;
             await this.Repository.AddAsync(cart);
             await this.Repository.SaveChangesAsync();

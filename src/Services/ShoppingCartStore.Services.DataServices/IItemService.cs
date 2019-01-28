@@ -6,7 +6,7 @@
 
     public interface IItemService
     {
-        Task Save(string productId, int quantity, string cartId);
+        Task<Item> Create(string productId, int quantity, string cartId);
 
         Task Delete(Item item);
 
@@ -15,5 +15,9 @@
         Task<IEnumerable<Item>> AllByCartId(string cartId);
 
         Task<Item> FindByProductId(string productId);
+
+        Task<Item> FindByIdAndCustomerUsername(string itemId, string username);
+
+        Task UpdateItemProductQuantity(string itemId, int count);
     }
 }

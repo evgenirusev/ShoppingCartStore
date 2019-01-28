@@ -16,7 +16,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
         {
         }
 
-        public async Task Save(string productId, int quantity, string cartId)
+        public async Task<Item> Create(string productId, int quantity, string cartId)
         {
             Item item = new Item();
             item.ProductId = productId;
@@ -24,6 +24,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             item.CartId = cartId;
             await this.Repository.AddAsync(item);
             await this.Repository.SaveChangesAsync();
+            return item;
         }
 
         public async Task Delete(Item item)
@@ -44,6 +45,21 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
         public async Task<Item> FindByProductId(string productId)
         {
             return Repository.All().FirstOrDefault(i => i.ProductId == productId);
+        }
+
+        public async Task<Item> FindByIdAndCustomerUsername
+            (string productId, string username)
+        {
+            return Repository.All().FirstOrDefault(i => i.ProductId == productId 
+                    && i.Cart.Customer.UserName == username);
+        }
+
+        public async Task UpdateItemProductQuantity(string itemId, int count)
+        {
+            var item = this.Repository.FindById(itemId);
+            item.Quantity += count;
+            this.Repository.Update(item);
+            await this.Repository.SaveChangesAsync();
         }
     }
 }
