@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCartStore.Common.BindingModels.Product;
+using ShoppingCartStore.Common.ViewModels.Cart;
 using ShoppingCartStore.Common.ViewModels.Product;
 using ShoppingCartStore.Services.DataServices;
 
@@ -10,15 +11,17 @@ namespace SoppingCartStore.Web.Controllers
     public class ProductsController : Controller
     {
         private IProductService _productService;
+        private ICartService _cartService;
 
-        public ProductsController(IProductService productService)
+        public ProductsController(ICartService cartService, IProductService productService)
         {
             _productService = productService;
+            _cartService = cartService;
         }
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ProductViewModel> products = await _productService.GetAllProductsAsync();
+            IEnumerable<ProductViewModel> products = await _productService.GetAllViewModelsAsync();
             return View(products);
         }
 

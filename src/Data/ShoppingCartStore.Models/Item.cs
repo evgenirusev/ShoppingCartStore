@@ -1,4 +1,6 @@
-﻿namespace ShoppingCartStore.Models
+﻿using System.Collections.Generic;
+
+namespace ShoppingCartStore.Models
 {
     public class Item : BaseModel
     {
@@ -8,8 +10,8 @@
 
         public Item(string productId, int quantity)
         {
-            this.ProductId = productId;
-            this.Quantity = quantity;
+            ProductId = productId;
+            Quantity = quantity;
         }
 
         public int Quantity { get; set; }

@@ -27,7 +27,9 @@
                 .HasForeignKey<Cart>(b => b.CustomerId);
 
             builder.Entity<Item>()
-                .HasOne(i => i.Product);
+                .HasOne(i => i.Product)
+                .WithMany(p => p.Items)
+                .HasForeignKey(i => i.ProductId);
 
             builder.Entity<Item>()
                 .HasOne(i => i.Cart);

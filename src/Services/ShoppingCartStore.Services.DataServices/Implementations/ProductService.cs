@@ -8,6 +8,7 @@
     using ShoppingCartStore.Data.Common.Repositories;
     using ShoppingCartStore.Models;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public class ProductService : BaseService<Product>, IProductService
@@ -16,6 +17,12 @@
             IMapper mapper, UserManager<Customer> userManager)
             : base(repository, mapper, userManager)
         {
+        }
+
+        public ProductViewModel FindById(string id)
+        {
+            var product = Repository.All().Where(p => p.Id == id).First();
+            return Mapper.Map<ProductViewModel>(product);
         }
 
         public async Task Create(CreateProductBindingModel model)
@@ -28,7 +35,7 @@
             await this.Repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllProductsAsync()
+        public async Task<IEnumerable<ProductViewModel>> GetAllViewModelsAsync()
         {
             return this.Mapper.Map<IEnumerable<ProductViewModel>>(this.Repository.All());
         }

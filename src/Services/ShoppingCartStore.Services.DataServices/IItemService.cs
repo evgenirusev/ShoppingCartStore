@@ -1,5 +1,6 @@
 ﻿namespace ShoppingCartStore.Services.DataServices
 {
+    using ShoppingCartStore.Common.ViewModels.Item;
     using ShoppingCartStore.Models;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -8,16 +9,18 @@
     {
         Task<Item> Create(string productId, int quantity, string cartId);
 
-        Task Delete(Item item);
-
         Task<IEnumerable<Item>> All();
-
-        Task<IEnumerable<Item>> AllByCartId(string cartId);
 
         Task<Item> FindByProductId(string productId);
 
         Task<Item> FindByIdAndCustomerUsername(string itemId, string username);
 
         Task UpdateItemProductQuantity(string itemId, int count);
+
+        Task Delete(Item item);
+
+        IEnumerable<ItemViewModel> AllViewModelsByCartId(string cartId);
+
+        Task<IEnumerable<Item>> AllByCartId(string cartId);
     }
 }

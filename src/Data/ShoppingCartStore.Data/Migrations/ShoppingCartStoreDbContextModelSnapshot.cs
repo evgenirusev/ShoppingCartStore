@@ -299,7 +299,7 @@ namespace ShoppingCartStore.Data.Migrations
                         .HasForeignKey("CartId");
 
                     b.HasOne("ShoppingCartStore.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("Items")
                         .HasForeignKey("ProductId");
                 });
 #pragma warning restore 612, 618

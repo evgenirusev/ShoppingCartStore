@@ -10,7 +10,7 @@ using ShoppingCartStore.Data;
 namespace ShoppingCartStore.Data.Migrations
 {
     [DbContext(typeof(ShoppingCartStoreDbContext))]
-    [Migration("20190128154733_initial")]
+    [Migration("20190129082823_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -301,7 +301,7 @@ namespace ShoppingCartStore.Data.Migrations
                         .HasForeignKey("CartId");
 
                     b.HasOne("ShoppingCartStore.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("Items")
                         .HasForeignKey("ProductId");
                 });
 #pragma warning restore 612, 618

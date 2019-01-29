@@ -1,6 +1,7 @@
 ﻿namespace ShoppingCartStore.Services.DataServices
 {
     using Microsoft.AspNetCore.Http;
+    using ShoppingCartStore.Common.ViewModels.Cart;
     using System.Threading.Tasks;
 
     public interface ICartService
@@ -18,5 +19,7 @@
         Task<int> GetPersistedCartProductCount(string username, ISession session);
 
         Task ManageCartOnCustomerLogin(ISession session, string username);
+
+        CartViewModel GetCartViewModelByCustomerId(string customerI);
     }
 }

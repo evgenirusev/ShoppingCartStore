@@ -9,6 +9,8 @@ namespace ShoppingCartStore.Services.DataServices
     {
         Task Create(CreateProductBindingModel model);
 
-        Task<IEnumerable<ProductViewModel>> GetAllProductsAsync();
+        Task<IEnumerable<ProductViewModel>> GetAllViewModelsAsync();
+
+        ProductViewModel FindById(string id);
     }
 }

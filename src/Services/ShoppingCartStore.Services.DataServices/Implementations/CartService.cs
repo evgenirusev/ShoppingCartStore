@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using ShoppingCartStore.Data.Common.Repositories;
-using ShoppingCartStore.Models;
-using SoppingCartStore.Common.Helpers;
-
-namespace ShoppingCartStore.Services.DataServices.Implementations
+﻿namespace ShoppingCartStore.Services.DataServices.Implementations
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using ShoppingCartStore.Common.ViewModels.Cart;
+    using ShoppingCartStore.Data.Common.Repositories;
+    using ShoppingCartStore.Models;
+    using SoppingCartStore.Common.Helpers;
+
     public class CartService : BaseService<Cart>, ICartService
     {
         IItemService _itemService;
@@ -210,16 +211,34 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             else
             {
                 int productCount = await GetPersistedCartProductCount(username, session);
-                SessionHelper.SetObjectAsJson(session, "productCount", productCount);
-                
-                var persistedCart = FindByUsername(username);
-                var persistedItems = await _itemService.AllByCartId(persistedCart.Id);
 
-                if (persistedItems != null)
+                if (productCount != 0)
                 {
-                    AddItemsToSession(persistedItems.ToList(), session);
+                    SessionHelper.SetObjectAsJson(session, "productCount", productCount);
+
+                    var persistedCart = FindByUsername(username);
+                    var persistedItems = await _itemService.AllByCartId(persistedCart.Id);
+
+                    if (persistedItems != null)
+                    {
+                        AddItemsToSession(persistedItems.ToList(), session);
+                    }
                 }
             }
+        }
+
+        public CartViewModel GetCartViewModelByCustomerId(string customerId)
+        {
+            var cartViewModel = new CartViewModel();
+            Cart cart = this.GetCartEntityByCustomerId(customerId);
+            cartViewModel.Items = _itemService.AllViewModelsByCartId(cart.Id);
+            return cartViewModel;
+        }
+
+        private Cart GetCartEntityByCustomerId(string customerId)
+        {
+            return Repository.All()
+                .Where(c => c.CustomerId == customerId).FirstOrDefault();
         }
     }
 }

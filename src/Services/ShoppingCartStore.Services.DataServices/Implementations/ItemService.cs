@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using ShoppingCartStore.Common.ViewModels.Item;
 using ShoppingCartStore.Data.Common.Repositories;
 using ShoppingCartStore.Models;
 
@@ -10,10 +11,13 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
 {
     public class ItemService : BaseService<Item>, IItemService
     {
-        public ItemService(IRepository<Item> repository,
-            IMapper mapper, UserManager<Customer> userManager) 
+        private IProductService _productService;
+
+        public ItemService(IRepository<Item> repository, IMapper mapper
+            , UserManager<Customer> userManager, IProductService productService) 
             : base(repository, mapper, userManager)
         {
+            _productService = productService;
         }
 
         public async Task<Item> Create(string productId, int quantity, string cartId)
@@ -61,6 +65,29 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             item.Quantity += count;
             this.Repository.Update(item);
             await this.Repository.SaveChangesAsync();
+        }
+
+        public IEnumerable<ItemViewModel> AllViewModelsByCartId(string cartId)
+        {
+            var itemViewModels = new List<ItemViewModel>();
+
+            var itemEntities = GetItemEntitiesByCartId(cartId);
+
+            foreach (var itemEntity in itemEntities)
+            {
+                ItemViewModel itemViewModel = new ItemViewModel();
+                var productViewModel = _productService.FindById(itemEntity.ProductId);
+                itemViewModel.Product = productViewModel;
+                itemViewModel.ProductQuantity = itemEntity.Quantity;
+                itemViewModels.Add(itemViewModel);
+            }
+
+            return itemViewModels;
+        }
+
+        private IEnumerable<Item> GetItemEntitiesByCartId(string cartId)
+        {
+            return Repository.All().Where(i => i.CartId == cartId);
         }
     }
 }

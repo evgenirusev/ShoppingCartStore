@@ -1,26 +1,40 @@
 ﻿namespace SoppingCartStore.Web.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using ShoppingCartStore.Models;
     using ShoppingCartStore.Services.DataServices;
     using System.Threading.Tasks;
 
     public class CartController : Controller
     {
-        private ICartService cartService;
+        private ICartService _cartService;
+        private UserManager<Customer> _userManager;
 
-        public CartController(ICartService cartService)
+        public CartController(ICartService cartService, UserManager<Customer> userManager)
         {
-            this.cartService = cartService;
+            _cartService = cartService;
+            _userManager = userManager;
+        }
+
+        [Authorize]
+        public IActionResult Index()
+        {
+            string customerId = _userManager
+                .FindByNameAsync(this.User.Identity.Name).Result.Id;
+            var cartViewModel = _cartService.GetCartViewModelByCustomerId(customerId);
+            return View(cartViewModel);
         }
 
         public async Task<IActionResult> AddToCart(string id)
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                await this.cartService.AddToPersistedCart(id, this.User.Identity.Name);
+                await _cartService.AddToPersistedCart(id, this.User.Identity.Name);
             }
 
-            await this.cartService.AddToSessionCart(id, HttpContext.Session);
+            await _cartService.AddToSessionCart(id, HttpContext.Session);
 
             return this.RedirectToAction("Index", "Products");
         }
