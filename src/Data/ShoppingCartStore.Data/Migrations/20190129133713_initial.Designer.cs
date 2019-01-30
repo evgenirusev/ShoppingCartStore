@@ -10,7 +10,7 @@ using ShoppingCartStore.Data;
 namespace ShoppingCartStore.Data.Migrations
 {
     [DbContext(typeof(ShoppingCartStoreDbContext))]
-    [Migration("20190129082823_initial")]
+    [Migration("20190129133713_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -222,6 +222,24 @@ namespace ShoppingCartStore.Data.Migrations
                     b.ToTable("Item");
                 });
 
+            modelBuilder.Entity("ShoppingCartStore.Models.Order", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CustomerId");
+
+                    b.Property<string>("DeliveryAddress");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("ShoppingCartStore.Models.Product", b =>
                 {
                     b.Property<string>("Id")
@@ -240,6 +258,19 @@ namespace ShoppingCartStore.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("ShoppingCartStore.Models.ProductOrders", b =>
+                {
+                    b.Property<string>("OrderId");
+
+                    b.Property<string>("ProductId");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductOrders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -303,6 +334,26 @@ namespace ShoppingCartStore.Data.Migrations
                     b.HasOne("ShoppingCartStore.Models.Product", "Product")
                         .WithMany("Items")
                         .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("ShoppingCartStore.Models.Order", b =>
+                {
+                    b.HasOne("ShoppingCartStore.Models.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId");
+                });
+
+            modelBuilder.Entity("ShoppingCartStore.Models.ProductOrders", b =>
+                {
+                    b.HasOne("ShoppingCartStore.Models.Order", "Order")
+                        .WithMany("ProductOrders")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ShoppingCartStore.Models.Product", "Product")
+                        .WithMany("ProductOrders")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

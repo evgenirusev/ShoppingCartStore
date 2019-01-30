@@ -19,7 +19,7 @@
 
         Task Delete(Item item);
 
-        IEnumerable<ItemViewModel> AllViewModelsByCartId(string cartId);
+        ICollection<ItemViewModel> AllViewModelsByCartId(string cartId);
 
         Task<IEnumerable<Item>> AllByCartId(string cartId);
     }

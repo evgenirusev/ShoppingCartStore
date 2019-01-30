@@ -18,6 +18,8 @@
         public DbSet<Cart> Carts{ get; set; }
 
         public DbSet<Item> Products { get; set; }
+        
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -33,6 +35,17 @@
 
             builder.Entity<Item>()
                 .HasOne(i => i.Cart);
+
+            builder.Entity<ProductOrders>()
+                .HasKey(po => new { po.OrderId, po.ProductId});
+            builder.Entity<ProductOrders>()
+                .HasOne(po => po.Order)
+                .WithMany(o => o.ProductOrders)
+                .HasForeignKey(po => po.OrderId);
+            builder.Entity<ProductOrders>()
+                .HasOne(po => po.Product)
+                .WithMany(c => c.ProductOrders)
+                .HasForeignKey(po => po.ProductId);
 
             base.OnModelCreating(builder);
         }

@@ -20,6 +20,6 @@
 
         Task ManageCartOnCustomerLogin(ISession session, string username);
 
-        CartViewModel GetCartViewModelByCustomerId(string customerI);
+        CartViewModel GetCartViewModelByCustomerId(string customerId);
     }
 }

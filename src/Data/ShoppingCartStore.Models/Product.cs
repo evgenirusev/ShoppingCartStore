@@ -8,6 +8,7 @@ namespace ShoppingCartStore.Models
         public Product()
         {
             Items = new List<Item>();
+            ProductOrders = new List<ProductOrders>();
         }
 
         public string Name { get; set; }
@@ -20,6 +21,8 @@ namespace ShoppingCartStore.Models
 
         public DateTime CreatedAt { get; set; }
 
-        public IEnumerable<Item> Items { get; set; }
+        public ICollection<Item> Items { get; set; }
+
+        public ICollection<ProductOrders> ProductOrders { get; set; }
     }
 }

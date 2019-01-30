@@ -67,7 +67,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             await this.Repository.SaveChangesAsync();
         }
 
-        public IEnumerable<ItemViewModel> AllViewModelsByCartId(string cartId)
+        public ICollection<ItemViewModel> AllViewModelsByCartId(string cartId)
         {
             var itemViewModels = new List<ItemViewModel>();
 
@@ -76,6 +76,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             foreach (var itemEntity in itemEntities)
             {
                 ItemViewModel itemViewModel = new ItemViewModel();
+                itemViewModel.Id = itemEntity.Id;
                 var productViewModel = _productService.FindById(itemEntity.ProductId);
                 itemViewModel.Product = productViewModel;
                 itemViewModel.ProductQuantity = itemEntity.Quantity;

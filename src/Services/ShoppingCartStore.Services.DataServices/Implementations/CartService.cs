@@ -231,7 +231,18 @@
         {
             var cartViewModel = new CartViewModel();
             Cart cart = this.GetCartEntityByCustomerId(customerId);
-            cartViewModel.Items = _itemService.AllViewModelsByCartId(cart.Id);
+
+            if (cart != null)
+            {
+                cartViewModel.Items = _itemService
+                    .AllViewModelsByCartId(cart.Id).ToList();
+            }
+
+            foreach (var item in cartViewModel.Items)
+            {
+                cartViewModel.Price += (item.Product.Price * item.ProductQuantity);
+            }
+
             return cartViewModel;
         }
 
