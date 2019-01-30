@@ -90,5 +90,16 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
         {
             return Repository.All().Where(i => i.CartId == cartId);
         }
+
+        public Task<Item> FindByProductIdAndCustomerUsername(string productId, string username)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<Item> FindByIdAndCustomerId(string itemId, string customerId)
+        {
+            return Repository.All().FirstOrDefault(i => i.Id == itemId
+                    && i.Cart.Customer.Id == customerId);
+        }
     }
 }

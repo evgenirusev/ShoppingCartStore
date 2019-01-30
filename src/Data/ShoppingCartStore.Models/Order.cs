@@ -10,7 +10,14 @@ namespace ShoppingCartStore.Models
             ProductOrders = new List<ProductOrders>();
         }
 
+        public Order(string orderId, string productId) : this()
+        {
+            
+        }
+
         public string DeliveryAddress { get; set; }
+
+        public string OrderNote { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

@@ -27,7 +27,7 @@
         {
             var cart = FindByUsername(username);
             var item = await _itemService
-                .FindByIdAndCustomerUsername(productId, username);
+                .FindByProductIdAndCustomerUsername(productId, username);
 
             if (cart == null)
             {
@@ -238,9 +238,12 @@
                     .AllViewModelsByCartId(cart.Id).ToList();
             }
 
-            foreach (var item in cartViewModel.Items)
+            if (cartViewModel.Items != null)
             {
-                cartViewModel.Price += (item.Product.Price * item.ProductQuantity);
+                foreach (var item in cartViewModel.Items)
+                {
+                    cartViewModel.Price += (item.Product.Price * item.ProductQuantity);
+                }
             }
 
             return cartViewModel;

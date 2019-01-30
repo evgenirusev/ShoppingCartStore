@@ -9,35 +9,35 @@
         <div class="col-md-8">
             @if (Model.Items != null)
             {
-            <div class="row">
-                @for (int i = 0; i < Model.Items.Count(); i++)
-                {
-                    <div class="col-md-5 p-3 bg-light m-2 text-center">
-                        <div class="">
-                            <img class="w-50" src="~/images/product.png" asp-append-version="true" />
+                <div class="row">
+                    @for (int i = 0; i < Model.Items.Count(); i++)
+                    {
+                        <div class="col-md-5 p-3 bg-light m-2 text-center">
+                            <div class="">
+                                <img class="w-50" src="~/images/product.png" asp-append-version="true" />
+                            </div>
+                            <div class="col">
+                                <h4>@Model.Items[i].Product.Name</h4>
+                            </div>
+                            <hr />
+                            <div class="col">
+                                <h4>Price: $@Model.Items[i].Product.Price</h4>
+                            </div>
+                            <hr />
+                            <div class="col">
+                                <h4>Quantity: @Model.Items[i].ProductQuantity</h4>
+                            </div>
                         </div>
-                        <div class="col">
-                            <h4>@Model.Items[i].Product.Name</h4>
-                        </div>
-                        <hr />
-                        <div class="col">
-                            <h4>Price: $@Model.Items[i].Product.Price</h4>
-                        </div>
-                        <hr />
-                        <div class="col">
-                            <h4>Quantity: @Model.Items[i].ProductQuantity</h4>
-                        </div>
-                    </div>
-                    <input name="ItemIds" value="@Model.Items[i].Id" type="hidden" />
-                }
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <label asp-for="CreateOrderBindingModel.OrderNote">Order Note:</label>
-                    <textarea asp-for="CreateOrderBindingModel.OrderNote" name="OrderNote" class="form-control" rows="5"></textarea>
-                    <span asp-validation-for="CreateOrderBindingModel.OrderNote" class="text-danger"></span>
+                        <input name="ItemIds" value="@Model.Items[i].Id" type="hidden" />
+                    }
                 </div>
-            </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="CreateOrderBindingModel.OrderNote">Order Note:</label>
+                        <textarea asp-for="CreateOrderBindingModel.OrderNote" name="OrderNote" class="form-control" rows="5"></textarea>
+                        <span asp-validation-for="CreateOrderBindingModel.OrderNote" class="text-danger"></span>
+                    </div>
+                </div>
             }
             else
             {
@@ -59,17 +59,21 @@
                 <p>Order Total: @Model.Price</p>
                 <hr />
             </div>
-            <div class="col">
-                <div class="form-group">
-                    <label asp-for="CreateOrderBindingModel.DeliveryAddress"></label>
-                    <input asp-for="CreateOrderBindingModel.DeliveryAddress" type="text" name="DeliveryAddress" class="form-control" />
-                    <span asp-validation-for="CreateOrderBindingModel.DeliveryAddress" class="text-danger"></span>
+            @if (Model.Items != null)
+            {
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="CreateOrderBindingModel.DeliveryAddress"></label>
+                        <input asp-for="CreateOrderBindingModel.DeliveryAddress" type="text" name="DeliveryAddress" class="form-control" />
+                        <span asp-validation-for="CreateOrderBindingModel.DeliveryAddress" class="text-danger"></span>
+                    </div>
                 </div>
-            </div>
-            <div class="col">
-                <button type="submit" class="w-100 btn btn-info">Order</button>
-                <hr />
-            </div>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="col">
+                    <button type="submit" class="w-100 btn btn-info">Order</button>
+                    <hr />
+                </div>
+            }
         </div>
     </div>
 </form>

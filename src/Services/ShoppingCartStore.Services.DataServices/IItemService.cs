@@ -13,7 +13,11 @@
 
         Task<Item> FindByProductId(string productId);
 
-        Task<Item> FindByIdAndCustomerUsername(string itemId, string username);
+        // Refactor: all methods should use customerId instead of username
+        // for the purpose of having consistent conventions
+        Task<Item> FindByProductIdAndCustomerUsername(string productId, string username);
+
+        Task<Item> FindByIdAndCustomerId(string itemId, string customerId);
 
         Task UpdateItemProductQuantity(string itemId, int count);
 
