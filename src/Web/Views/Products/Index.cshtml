@@ -42,7 +42,7 @@
                                     }
                                 </a>
                                 <h5 class="mt-2">@product.Name</h5>
-                                <p>@product.Price</p>
+                                <p>$@product.Price</p>
                                 <form asp-action="AddToCart" asp-route-id="@product.Id" asp-controller="Cart">
                                     <button class="btn btn-info">View</button>
                                 </form>
