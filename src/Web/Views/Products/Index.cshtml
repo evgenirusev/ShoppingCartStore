@@ -25,24 +25,31 @@
 
         @if (Model.Count() > 0)
         {
-            <div class="row ml-1">
-                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 text-center mb-5">
-                    @foreach (var product in Model)
-                    {
+            <div class="row">
+                @foreach (var product in Model)
+                {
+                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 text-center mb-5">
                         <div class="thumbnail">
                             <div class="caption">
                                 <a href="#">
-                                    <img src="https://www.t-mobile.com/content/dam/t-mobile/en-p/cell-phones/apple/apple-iphone-xr/blue/Apple-iPhoneXr-Blue-2-3x.jpg" class="w-75">
+                                    @if (@product.ImageURI != null)
+                                    {
+                                        <img src="@product.ImageURI" class="product-image">
+                                    }
+                                    else
+                                    {
+                                        <img src="http://www.indiantradebird.in/images/noimage.jpg" class="product-image">
+                                    }
                                 </a>
                                 <h5 class="mt-2">@product.Name</h5>
                                 <p>@product.Price</p>
                                 <form asp-action="AddToCart" asp-route-id="@product.Id" asp-controller="Cart">
-                                    <button class="btn btn-primary">Add to cart</button>
+                                    <button class="btn btn-info">View</button>
                                 </form>
                             </div>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
             </div>
         }
         else

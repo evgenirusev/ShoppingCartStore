@@ -79,3 +79,9 @@ body {
     background: red;
     color: white;
 }
+
+.product-image {
+    position: relative;
+    width: 200px;
+    height: 250px;
+}
