@@ -85,3 +85,8 @@ body {
     width: 200px;
     height: 250px;
 }
+
+.product-details-image {
+    position: relative;
+    width: 100%;
+}

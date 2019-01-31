@@ -33,6 +33,7 @@
             {
                 await _cartService.AddToPersistedCart(id, this.User.Identity.Name);
             }
+
             await _cartService.AddToSessionCart(id, HttpContext.Session);
             return this.RedirectToAction("Index", "Products");
         }

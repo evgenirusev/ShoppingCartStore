@@ -43,9 +43,9 @@
                                 </a>
                                 <h5 class="mt-2">@product.Name</h5>
                                 <p>$@product.Price</p>
-                                <form asp-action="AddToCart" asp-route-id="@product.Id" asp-controller="Cart">
+                                <a asp-action="Details" asp-route-id="@product.Id" asp-controller="Products">
                                     <button class="btn btn-info">View</button>
-                                </form>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -54,8 +54,7 @@
         }
         else
         {
-        <h4><i>There are no products for sale yet.</i></h4>
+            <h4><i>There are no products for sale yet.</i></h4>
         }
-
     </div>
 </div>

@@ -1,0 +1,43 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+<!-- HEADER & SEARCH FORM -->
+<div class="d-flex justify-content-around">
+    <div>
+        <partial name="_SearchForm" />
+    </div>
+    <div class="d-flex justify-content-end">
+        <partial name="_CartPartial" />
+    </div>
+</div>
+
+<h1 class="ml-5">@Model.Name</h1>
+<div class="row">
+    <div class="col-md-6 p-5">
+        <img src="@Model.ImageURI" class="product-details-image">
+    </div>
+    <div class="col-md-4">
+        <h2 class="mb-4">Brand: <a href="#">Apple</a></h2>
+        <hr class="hr-2 bg-info">
+        <div class="d-flex justify-content-between">
+            <h4>Price @Model.Price</h4>
+        </div>
+        <hr>
+        <div class="mb-5">
+            <h3>Description:</h3>
+            @if (@Model.Description != null)
+            {
+                <i>@Model.Description</i>
+            }
+            else
+            {
+                <p>This product does not have a description.</p>
+            }
+        </div>
+        <hr></hr>
+        <form asp-action="AddToCart" asp-route-id="@Model.Id" asp-controller="Cart">
+            <button class="btn btn-info">Add to cart</button>
+        </form>
+    </div>
+</div>

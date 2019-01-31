@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCartStore.Common.BindingModels.Product;
-using ShoppingCartStore.Common.ViewModels.Cart;
 using ShoppingCartStore.Common.ViewModels.Product;
 using ShoppingCartStore.Services.DataServices;
 
@@ -35,6 +34,12 @@ namespace SoppingCartStore.Web.Controllers
         {
             await _productService.Create(model);
             return this.RedirectToAction("Index", "Products");
+        }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var productViewModel = _productService.FindById(id);
+            return View(productViewModel);
         }
     }
 }
