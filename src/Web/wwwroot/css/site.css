@@ -58,3 +58,24 @@ body {
 .h-2 {
     height: 2px;
 }
+
+.cart-badge {
+    position: relative;
+    top: 2px;
+    right: 0px;
+    margin-left: 20px;
+    padding-top: 8px;
+    padding-right: 18px;
+}
+
+.cart-badge i {
+    font-size: 34px;
+}
+
+.cart-badge span.badge {
+    top: 0;
+    left: 30px;
+    position: absolute;
+    background: red;
+    color: white;
+}

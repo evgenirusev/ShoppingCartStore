@@ -4,14 +4,13 @@
     ViewData["Title"] = "My Cart";
 }
 
-<a
-   asp-area=""
+<a asp-area=""
    asp-controller="Cart"
    asp-action="Index">
-    <div>
-        Cart
-    </div>
-    <div>
-        @Model.ItemsCount
+    <div class="cart-badge badge-icons pull-right">
+        <a href="~/cart"><i class="fa fa-shopping-cart"></i></a>
+        <span class="badge badge-danger rounded-x">@Model.ItemsCount</span>
+        <div class="badge-open">
+        </div>
     </div>
 </a>
