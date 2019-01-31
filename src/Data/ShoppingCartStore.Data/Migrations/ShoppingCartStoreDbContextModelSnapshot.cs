@@ -260,17 +260,19 @@ namespace ShoppingCartStore.Data.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("ShoppingCartStore.Models.ProductOrders", b =>
+            modelBuilder.Entity("ShoppingCartStore.Models.ProductsOrder", b =>
                 {
                     b.Property<string>("OrderId");
 
                     b.Property<string>("ProductId");
 
+                    b.Property<int>("ProductQuantity");
+
                     b.HasKey("OrderId", "ProductId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductOrders");
+                    b.ToTable("ProductsOrder");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -343,15 +345,15 @@ namespace ShoppingCartStore.Data.Migrations
                         .HasForeignKey("CustomerId");
                 });
 
-            modelBuilder.Entity("ShoppingCartStore.Models.ProductOrders", b =>
+            modelBuilder.Entity("ShoppingCartStore.Models.ProductsOrder", b =>
                 {
                     b.HasOne("ShoppingCartStore.Models.Order", "Order")
-                        .WithMany("ProductOrders")
+                        .WithMany("ProductsOrder")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ShoppingCartStore.Models.Product", "Product")
-                        .WithMany("ProductOrders")
+                        .WithMany("ProductsOrder")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

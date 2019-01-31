@@ -7,7 +7,7 @@ namespace ShoppingCartStore.Models
     {
         public Order()
         {
-            ProductOrders = new List<ProductOrders>();
+            ProductsOrder = new List<ProductsOrder>();
         }
 
         public Order(string orderId, string productId) : this()
@@ -24,6 +24,6 @@ namespace ShoppingCartStore.Models
         public string CustomerId { get; set; }
         public Customer Customer { get; set; }
 
-        public ICollection<ProductOrders> ProductOrders { get; set; }
+        public ICollection<ProductsOrder> ProductsOrder { get; set; }
     }
 }

@@ -195,6 +195,7 @@ namespace ShoppingCartStore.Data.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     DeliveryAddress = table.Column<string>(nullable: true),
+                    OrderNote = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CustomerId = table.Column<string>(nullable: true)
                 },
@@ -236,23 +237,24 @@ namespace ShoppingCartStore.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductOrders",
+                name: "ProductsOrder",
                 columns: table => new
                 {
                     OrderId = table.Column<string>(nullable: false),
-                    ProductId = table.Column<string>(nullable: false)
+                    ProductId = table.Column<string>(nullable: false),
+                    ProductQuantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductOrders", x => new { x.OrderId, x.ProductId });
+                    table.PrimaryKey("PK_ProductsOrder", x => new { x.OrderId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_ProductOrders_Orders_OrderId",
+                        name: "FK_ProductsOrder_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductOrders_Product_ProductId",
+                        name: "FK_ProductsOrder_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
@@ -321,8 +323,8 @@ namespace ShoppingCartStore.Data.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductOrders_ProductId",
-                table: "ProductOrders",
+                name: "IX_ProductsOrder_ProductId",
+                table: "ProductsOrder",
                 column: "ProductId");
         }
 
@@ -347,7 +349,7 @@ namespace ShoppingCartStore.Data.Migrations
                 name: "Item");
 
             migrationBuilder.DropTable(
-                name: "ProductOrders");
+                name: "ProductsOrder");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

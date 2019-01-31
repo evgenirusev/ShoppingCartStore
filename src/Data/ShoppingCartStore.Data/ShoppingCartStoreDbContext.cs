@@ -36,15 +36,15 @@
             builder.Entity<Item>()
                 .HasOne(i => i.Cart);
 
-            builder.Entity<ProductOrders>()
+            builder.Entity<ProductsOrder>()
                 .HasKey(po => new { po.OrderId, po.ProductId});
-            builder.Entity<ProductOrders>()
+            builder.Entity<ProductsOrder>()
                 .HasOne(po => po.Order)
-                .WithMany(o => o.ProductOrders)
+                .WithMany(o => o.ProductsOrder)
                 .HasForeignKey(po => po.OrderId);
-            builder.Entity<ProductOrders>()
+            builder.Entity<ProductsOrder>()
                 .HasOne(po => po.Product)
-                .WithMany(c => c.ProductOrders)
+                .WithMany(c => c.ProductsOrder)
                 .HasForeignKey(po => po.ProductId);
 
             base.OnModelCreating(builder);

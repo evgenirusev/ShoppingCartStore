@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShoppingCartStore.Common.BindingModels.Order;
 using ShoppingCartStore.Models;
 using ShoppingCartStore.Services.DataServices;
+using System.Threading.Tasks;
 
 namespace SoppingCartStore.Web.Pages.Orders
 {
@@ -21,19 +22,20 @@ namespace SoppingCartStore.Web.Pages.Orders
         [BindProperty]
         public CreateOrderBindingModel Input { get; set; }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!this.ModelState.IsValid)
             {
                 return this.Page();
             }
+
             string customerId = _userManager
                 .FindByNameAsync(this.User.Identity.Name).Result.Id;
 
-            _orderService.Create(Input.DeliveryAddress, Input.OrderNote
+            await _orderService.Create(Input.DeliveryAddress, Input.OrderNote
                 , customerId, Input.ItemIds);
             
-            return this.RedirectToPage("/Orders/Success");
+            return null;
         }
     }
 }

@@ -24,18 +24,28 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             , string customerId, ICollection<string> itemIds)
         {
             Order order = new Order();
-            List<Item> items = new List<Item>();
 
-            foreach(var item in items)
-            {
-
-            }
-
+            order.Id = Guid.NewGuid().ToString();
             order.OrderNote = orderNote;
+            order.DeliveryAddress = deliveryAddress;
             order.CustomerId = customerId;
             order.CreatedAt = DateTime.Now;
 
-            // TODO: Persist
+            foreach (var itemId in itemIds)
+            {
+                var item = await _itemService
+                    .FindByIdAndCustomerId(itemId, customerId);
+
+                var productOrder = new ProductsOrder();
+                productOrder.OrderId = order.Id;
+                productOrder.ProductId = item.ProductId;
+                productOrder.ProductQuantity = item.Quantity;
+
+                order.ProductsOrder.Add(productOrder);
+            }
+
+            await this.Repository.AddAsync(order);
+            await this.Repository.SaveChangesAsync();
         }
     }
 }
