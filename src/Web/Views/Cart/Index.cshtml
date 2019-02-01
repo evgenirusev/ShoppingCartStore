@@ -3,7 +3,17 @@
 @{
     ViewData["Title"] = "My Cart";
 }
+<!-- HEADER & SEARCH FORM -->
+<div class="d-flex justify-content-around">
+    <div>
+        <partial name="_SearchForm" />
+    </div>
+    <div class="d-flex justify-content-end">
+        <partial name="_CartPartial" />
+    </div>
+</div>
 
+<hr class="bg-info h-2" />
 <form method="post" asp-page="/Orders/Create">
     <div class="row">
         <div class="col-md-8">
@@ -12,9 +22,16 @@
                 <div class="row">
                     @for (int i = 0; i < Model.Items.Count(); i++)
                     {
-                        <div class="col-md-5 p-3 bg-light m-2 text-center">
+                        <div class="col-md-5 p-3 m-2 text-center">
                             <div class="">
-                                <img class="w-50" src="~/images/product.png" asp-append-version="true" />
+                                @if (Model.Items[i].Product.ImageURI != null)
+                                {
+                                    <img src="@Model.Items[i].Product.ImageURI" class="product-image">
+                                }
+                                else
+                                {
+                                    <img src="http://www.indiantradebird.in/images/noimage.jpg" class="product-image">
+                                }
                             </div>
                             <div class="col">
                                 <h4>@Model.Items[i].Product.Name</h4>
@@ -27,16 +44,14 @@
                             <div class="col">
                                 <h4>Quantity: @Model.Items[i].ProductQuantity</h4>
                             </div>
+                            <div class="col mt-3">
+                                <a asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@Model.Items[i].Product.Id">
+                                    <i class="text-white bg-danger p-1">Remove</i>
+                                </a>
+                            </div>
                         </div>
                         <input name="ItemIds" value="@Model.Items[i].Id" type="hidden" />
                     }
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label asp-for="CreateOrderBindingModel.OrderNote">Order Note:</label>
-                        <textarea asp-for="CreateOrderBindingModel.OrderNote" name="OrderNote" class="form-control" rows="5"></textarea>
-                        <span asp-validation-for="CreateOrderBindingModel.OrderNote" class="text-danger"></span>
-                    </div>
                 </div>
             }
             else
@@ -45,7 +60,9 @@
             }
         </div>
         <div class="col-md-4">
-            <p>Order Summary</p>
+            <div class="col">
+                <h5>Order Summary</h5>
+            </div>
             <hr class="bg-info" />
             <div class="col">
                 <p>Subtotal: @Model.Price</p>
@@ -63,9 +80,16 @@
             {
                 <div class="col">
                     <div class="form-group">
-                        <label asp-for="CreateOrderBindingModel.DeliveryAddress"></label>
-                        <input asp-for="CreateOrderBindingModel.DeliveryAddress" type="text" name="DeliveryAddress" class="form-control" />
+                        <label asp-for="CreateOrderBindingModel.DeliveryAddress">Delivery Address</label>
+                        <input asp-for="CreateOrderBindingModel.DeliveryAddress" placeholder="Enter Delivery Address..." type="text" name="DeliveryAddress" class="form-control" />
                         <span asp-validation-for="CreateOrderBindingModel.DeliveryAddress" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="CreateOrderBindingModel.OrderNote">Order Note:</label>
+                        <textarea asp-for="CreateOrderBindingModel.OrderNote" name="OrderNote" placeholder="Order Note (Not Mandatory)" class="form-control" rows="5"></textarea>
+                        <span asp-validation-for="CreateOrderBindingModel.OrderNote" class="text-danger"></span>
                     </div>
                 </div>
                 <div asp-validation-summary="All" class="text-danger"></div>

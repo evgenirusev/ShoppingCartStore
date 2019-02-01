@@ -21,5 +21,7 @@
         Task ManageCartOnCustomerLogin(ISession session, string username);
 
         CartViewModel GetCartViewModelByCustomerId(string customerId);
+
+        Task RemoveItemFromCart(string productId, string customerId);
     }
 }

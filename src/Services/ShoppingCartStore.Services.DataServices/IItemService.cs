@@ -26,5 +26,7 @@
         ICollection<ItemViewModel> AllViewModelsByCartId(string cartId);
 
         Task<IEnumerable<Item>> AllByCartId(string cartId);
+
+        Task DeleteByCartIdAndProductId(string cartId, string productId);
     }
 }

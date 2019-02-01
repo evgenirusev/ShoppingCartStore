@@ -102,5 +102,18 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             return Repository.All().FirstOrDefault(i => i.Id == itemId
                     && i.Cart.Customer.Id == customerId);
         }
+
+        public async Task DeleteByCartIdAndProductId(string cartId, string productId)
+        {
+            var item = FindByCartIdAndProductId(cartId, productId);
+            this.Repository.Delete(item);
+            await this.Repository.SaveChangesAsync();
+        }
+
+        private Item FindByCartIdAndProductId(string cartId, string productId)
+        {
+            return this.Repository.All()
+                .Where(i => i.CartId == cartId && i.ProductId == productId).FirstOrDefault();
+        }
     }
 }

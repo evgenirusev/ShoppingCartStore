@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <hr class="bg-info hr-2">
+        <hr class="bg-info h-2">
 
         @if (Model.Count() > 0)
         {
@@ -31,7 +31,7 @@
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 text-center mb-5">
                         <div class="thumbnail">
                             <div class="caption">
-                                <a href="#">
+                                <a asp-action="Details" asp-route-id="@product.Id" asp-controller="Products">
                                     @if (@product.ImageURI != null)
                                     {
                                         <img src="@product.ImageURI" class="product-image">
@@ -44,7 +44,7 @@
                                 <h5 class="mt-2">@product.Name</h5>
                                 <p>$@product.Price</p>
                                 <a asp-action="Details" asp-route-id="@product.Id" asp-controller="Products">
-                                    <button class="btn btn-info">View</button>
+                                    <button class="btn btn-sm btn-info">View</button>
                                 </a>
                             </div>
                         </div>

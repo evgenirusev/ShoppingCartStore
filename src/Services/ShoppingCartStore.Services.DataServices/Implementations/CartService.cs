@@ -254,5 +254,11 @@
             return Repository.All()
                 .Where(c => c.CustomerId == customerId).FirstOrDefault();
         }
+
+        public async Task RemoveItemFromCart(string productId, string customerId)
+        {
+            var cart = this.GetCartEntityByCustomerId(customerId);
+            await _itemService.DeleteByCartIdAndProductId(cart.Id, productId);
+        }
     }
 }

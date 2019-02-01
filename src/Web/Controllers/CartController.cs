@@ -37,5 +37,13 @@
             await _cartService.AddToSessionCart(id, HttpContext.Session);
             return this.RedirectToAction("Index", "Products");
         }
+
+        public async Task<IActionResult> RemoveFromCart(string id)
+        {
+            string customerId = _userManager
+                .FindByNameAsync(this.User.Identity.Name).Result.Id;
+            await _cartService.RemoveItemFromCart(id, customerId);
+            return this.RedirectToAction("Index", "Cart");
+        }
     }
 }
