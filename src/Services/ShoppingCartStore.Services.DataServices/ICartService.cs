@@ -22,6 +22,8 @@
 
         CartViewModel GetCartViewModelByCustomerId(string customerId);
 
-        Task RemoveItemFromCart(string productId, string customerId);
+        Task RemoveItemFromCart(string productId, string customerId, ISession session);
+
+        Task RemoveItemFromSession(string productId, ISession session);
     }
 }

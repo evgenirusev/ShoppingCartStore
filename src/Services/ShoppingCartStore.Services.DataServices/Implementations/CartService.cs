@@ -1,6 +1,5 @@
 ﻿namespace ShoppingCartStore.Services.DataServices.Implementations
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -71,6 +70,7 @@
                 {
                     cart.Add(new Item(productId, 1));
                 }
+
                 SessionHelper.SetObjectAsJson(session, "cart", cart);
 
                 // Incrementing the product counter
@@ -255,10 +255,29 @@
                 .Where(c => c.CustomerId == customerId).FirstOrDefault();
         }
 
-        public async Task RemoveItemFromCart(string productId, string customerId)
+        public async Task RemoveItemFromCart(string productId, string customerId, ISession session)
         {
             var cart = this.GetCartEntityByCustomerId(customerId);
             await _itemService.DeleteByCartIdAndProductId(cart.Id, productId);
+            await RemoveItemFromSession(productId, session);
+        }
+
+        public async Task RemoveItemFromSession(string productId, ISession session)
+        {
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
+
+            foreach (var item in cart)
+            {
+                if (item.ProductId == productId)
+                {
+                    cart.Remove(item);
+                    int productCount = SessionHelper.GetObjectFromJson<int>(session, "productCount");
+                    SessionHelper.SetObjectAsJson(session, "productCount", productCount -= item.Quantity);
+                    break;
+                }
+            }
+
+            SessionHelper.SetObjectAsJson(session, "cart", cart);
         }
     }
 }

@@ -42,7 +42,7 @@
         {
             string customerId = _userManager
                 .FindByNameAsync(this.User.Identity.Name).Result.Id;
-            await _cartService.RemoveItemFromCart(id, customerId);
+            await _cartService.RemoveItemFromCart(id, customerId, HttpContext.Session);
             return this.RedirectToAction("Index", "Cart");
         }
     }
