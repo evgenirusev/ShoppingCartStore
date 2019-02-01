@@ -2,7 +2,7 @@
 
 namespace ShoppingCartStore.Models
 {
-    public  class Category
+    public  class Category : BaseModel
     {
         public Category()
         {

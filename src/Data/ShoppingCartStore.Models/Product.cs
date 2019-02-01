@@ -21,6 +21,12 @@ namespace ShoppingCartStore.Models
 
         public DateTime CreatedAt { get; set; }
 
+        public string CategoryId { get; set; }
+        public Category Category { get; set; }
+
+        public string BrandId { get; set; }
+        public Brand Brand { get; set; }
+
         public ICollection<Item> Items { get; set; }
 
         public ICollection<ProductsOrder> ProductsOrder { get; set; }
