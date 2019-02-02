@@ -22,32 +22,32 @@
             _itemService = itemService;
         }
 
-        public async Task AddToPersistedCart(string productId, string username)
+        public async Task AddToPersistedCartAsync(string productId, string username)
         {
             var cart = FindByUsername(username);
             var item = await _itemService
-                .FindByProductIdAndCustomerUsername(productId, username);
+                .FindByProductIdAndCustomerUsernameAsync(productId, username);
 
             if (cart == null)
             {
                 var customer = await UserManager.FindByNameAsync(username);
                 var cartId = await CreateCart(customer);
-                await _itemService.Create(productId, 1, cartId);
+                await _itemService.CreateAsync(productId, 1, cartId);
             }
             else
             {
                 if (item != null)
                 {
-                    await _itemService.UpdateItemProductQuantity(item.Id, 1);
+                    await _itemService.UpdateItemProductQuantityAsync(item.Id, 1);
                 }
                 else
                 {
-                    await _itemService.Create(productId, 1, cart.Id);
+                    await _itemService.CreateAsync(productId, 1, cart.Id);
                 }
             }
         }
 
-        public async Task AddToSessionCart(string productId, ISession session)
+        public async Task AddToSessionCartAsync(string productId, ISession session)
         {
             if (SessionHelper.GetObjectFromJson<int>(session, "productCount") == 0)
             {
@@ -120,7 +120,7 @@
             }
         }
 
-        public async Task MigrateSessionProducts(string userEmail, ISession session)
+        public async Task MigrateSessionProductsAsync(string userEmail, ISession session)
         {
             var customer = await UserManager.FindByEmailAsync(userEmail);
             var persistedCart = this.Repository.FindById(customer.CartId);
@@ -136,7 +136,7 @@
 
             foreach(var item in cartItems)
             {
-                await _itemService.Create(item.ProductId, item.Quantity, newDbCartId);
+                await _itemService.CreateAsync(item.ProductId, item.Quantity, newDbCartId);
             }
         }
 
@@ -157,11 +157,11 @@
 
         private async Task DeletePersistedCart(Cart persistedCart)
         {
-            List<Item> persistedItems = (await _itemService.AllByCartId(persistedCart.Id)).ToList();
+            List<Item> persistedItems = (await _itemService.AllByCartIdAsync(persistedCart.Id)).ToList();
             
             foreach (var item in persistedItems)
             {
-                await _itemService.Delete(item);
+                await _itemService.DeleteAsync(item);
             }
 
             this.Repository.Delete(persistedCart);
@@ -180,7 +180,7 @@
             SessionHelper.SetObjectAsJson(session, "productCount", 0);
         }
 
-        public async Task<int> GetPersistedCartProductCount(string username, ISession session)
+        public async Task<int> GetPersistedCartProductCountAsync(string username, ISession session)
         {
             var cart = FindByUsername(username);
 
@@ -189,7 +189,7 @@
                 return 0;
             }
 
-            var cartItems = await _itemService.AllByCartId(cart.Id);
+            var cartItems = await _itemService.AllByCartIdAsync(cart.Id);
 
             int productCount = 0;
 
@@ -201,23 +201,23 @@
             return productCount;
         }
 
-        public async Task ManageCartOnCustomerLogin(ISession session, string username)
+        public async Task ManageCartOnCustomerLoginAsync(ISession session, string username)
         {
             var cartFromSession = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
             if (cartFromSession != null)
             {
-                await MigrateSessionProducts(username, session);
+                await MigrateSessionProductsAsync(username, session);
             }
             else
             {
-                int productCount = await GetPersistedCartProductCount(username, session);
+                int productCount = await GetPersistedCartProductCountAsync(username, session);
 
                 if (productCount != 0)
                 {
                     SessionHelper.SetObjectAsJson(session, "productCount", productCount);
 
                     var persistedCart = FindByUsername(username);
-                    var persistedItems = await _itemService.AllByCartId(persistedCart.Id);
+                    var persistedItems = await _itemService.AllByCartIdAsync(persistedCart.Id);
 
                     if (persistedItems != null)
                     {
@@ -235,7 +235,7 @@
             if (cart != null)
             {
                 cartViewModel.Items = _itemService
-                    .AllViewModelsByCartId(cart.Id).ToList();
+                    .AllViewModelsByCartIdAsync(cart.Id).ToList();
             }
 
             if (cartViewModel.Items != null)
@@ -255,14 +255,14 @@
                 .Where(c => c.CustomerId == customerId).FirstOrDefault();
         }
 
-        public async Task RemoveItemFromCart(string productId, string customerId, ISession session)
+        public async Task RemoveItemFromCartAsync(string productId, string customerId, ISession session)
         {
             var cart = this.GetCartEntityByCustomerId(customerId);
-            await _itemService.DeleteByCartIdAndProductId(cart.Id, productId);
-            await RemoveItemFromSession(productId, session);
+            await _itemService.DeleteByCartIdAndProductIdAsync(cart.Id, productId);
+            await RemoveItemFromSessionAsync(productId, session);
         }
 
-        public async Task RemoveItemFromSession(string productId, ISession session)
+        public async Task RemoveItemFromSessionAsync(string productId, ISession session)
         {
             List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
 

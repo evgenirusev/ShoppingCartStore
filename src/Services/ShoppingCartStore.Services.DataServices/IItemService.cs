@@ -7,26 +7,24 @@
 
     public interface IItemService
     {
-        Task<Item> Create(string productId, int quantity, string cartId);
+        Task<Item> CreateAsync(string productId, int quantity, string cartId);
 
-        Task<IEnumerable<Item>> All();
+        Task<IEnumerable<Item>> AllAsync();
 
-        Task<Item> FindByProductId(string productId);
+        Task<Item> FindByProductIdAsync(string productId);
+        
+        Task<Item> FindByProductIdAndCustomerUsernameAsync(string productId, string username);
 
-        // Refactor: all methods should use customerId instead of username
-        // for the purpose of having consistent conventions
-        Task<Item> FindByProductIdAndCustomerUsername(string productId, string username);
+        Task<Item> FindByIdAndCustomerIdAsync(string itemId, string customerId);
 
-        Task<Item> FindByIdAndCustomerId(string itemId, string customerId);
+        Task UpdateItemProductQuantityAsync(string itemId, int count);
 
-        Task UpdateItemProductQuantity(string itemId, int count);
+        Task DeleteAsync(Item item);
 
-        Task Delete(Item item);
+        ICollection<ItemViewModel> AllViewModelsByCartIdAsync(string cartId);
 
-        ICollection<ItemViewModel> AllViewModelsByCartId(string cartId);
+        Task<IEnumerable<Item>> AllByCartIdAsync(string cartId);
 
-        Task<IEnumerable<Item>> AllByCartId(string cartId);
-
-        Task DeleteByCartIdAndProductId(string cartId, string productId);
+        Task DeleteByCartIdAndProductIdAsync(string cartId, string productId);
     }
 }

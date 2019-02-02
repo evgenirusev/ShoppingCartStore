@@ -8,6 +8,7 @@
     using ShoppingCartStore.Common.ViewModels.Product;
     using ShoppingCartStore.Data.Common.Repositories;
     using ShoppingCartStore.Models;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -26,19 +27,22 @@
             return Mapper.Map<ProductViewModel>(product);
         }
 
-        public async Task Create(CreateProductBindingModel model)
+        public async Task CreateAsync(CreateProductBindingModel model)
         {
             Validator.ThrowIfNull(model);
 
             var product = this.Mapper.Map<Product>(model);
 
+            product.CategoryId = model.CategoryId;
+            product.CreatedAt = DateTime.Now;
+
             await this.Repository.AddAsync(product);
             await this.Repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllViewModelsAsync()
+        public ICollection<ProductViewModel> GetAllViewModelsAsync()
         {
-            return this.Mapper.Map<IEnumerable<ProductViewModel>>(this.Repository.All());
+            return this.Mapper.Map<ICollection<ProductViewModel>>(Repository.All());
         }
     }
 }

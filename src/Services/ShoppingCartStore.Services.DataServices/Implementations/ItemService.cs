@@ -20,7 +20,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             _productService = productService;
         }
 
-        public async Task<Item> Create(string productId, int quantity, string cartId)
+        public async Task<Item> CreateAsync(string productId, int quantity, string cartId)
         {
             Item item = new Item();
             item.ProductId = productId;
@@ -31,23 +31,23 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             return item;
         }
 
-        public async Task Delete(Item item)
+        public async Task DeleteAsync(Item item)
         {
             this.Repository.Delete(item);
             await this.Repository.SaveChangesAsync();
         }
         
-        public async Task<IEnumerable<Item>> All()
+        public async Task<IEnumerable<Item>> AllAsync()
         {
             return this.Repository.All();
         }
 
-        public async Task<IEnumerable<Item>> AllByCartId(string cartId)
+        public async Task<IEnumerable<Item>> AllByCartIdAsync(string cartId)
         {
             return Repository.All().Where(i => i.CartId == cartId);
         }
 
-        public async Task<Item> FindByProductId(string productId)
+        public async Task<Item> FindByProductIdAsync(string productId)
         {
             return Repository.All().FirstOrDefault(i => i.ProductId == productId);
         }
@@ -59,7 +59,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
                     && i.Cart.Customer.UserName == username);
         }
 
-        public async Task UpdateItemProductQuantity(string itemId, int count)
+        public async Task UpdateItemProductQuantityAsync(string itemId, int count)
         {
             var item = this.Repository.FindById(itemId);
             item.Quantity += count;
@@ -67,7 +67,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             await this.Repository.SaveChangesAsync();
         }
 
-        public ICollection<ItemViewModel> AllViewModelsByCartId(string cartId)
+        public ICollection<ItemViewModel> AllViewModelsByCartIdAsync(string cartId)
         {
             var itemViewModels = new List<ItemViewModel>();
 
@@ -91,19 +91,19 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             return Repository.All().Where(i => i.CartId == cartId);
         }
 
-        public async Task<Item> FindByProductIdAndCustomerUsername(string productId, string username)
+        public async Task<Item> FindByProductIdAndCustomerUsernameAsync(string productId, string username)
         {
             return Repository.All().FirstOrDefault(i => i.ProductId == productId
                     && i.Cart.Customer.UserName == username);
         }
 
-        public async Task<Item> FindByIdAndCustomerId(string itemId, string customerId)
+        public async Task<Item> FindByIdAndCustomerIdAsync(string itemId, string customerId)
         {
             return Repository.All().FirstOrDefault(i => i.Id == itemId
                     && i.Cart.Customer.Id == customerId);
         }
 
-        public async Task DeleteByCartIdAndProductId(string cartId, string productId)
+        public async Task DeleteByCartIdAndProductIdAsync(string cartId, string productId)
         {
             var item = FindByCartIdAndProductId(cartId, productId);
             this.Repository.Delete(item);

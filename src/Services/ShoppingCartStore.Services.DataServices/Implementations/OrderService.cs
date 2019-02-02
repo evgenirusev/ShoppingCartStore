@@ -20,7 +20,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             _itemService = itemService;
         }
 
-        public async Task Create(string deliveryAddress, string orderNote
+        public async Task CreateAsync(string deliveryAddress, string orderNote
             , string customerId, ICollection<string> itemIds)
         {
             Order order = new Order();
@@ -34,7 +34,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
             foreach (var itemId in itemIds)
             {
                 var item = await _itemService
-                    .FindByIdAndCustomerId(itemId, customerId);
+                    .FindByIdAndCustomerIdAsync(itemId, customerId);
 
                 var productOrder = new ProductsOrder();
                 productOrder.OrderId = order.Id;

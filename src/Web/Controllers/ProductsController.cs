@@ -18,9 +18,9 @@ namespace SoppingCartStore.Web.Controllers
             _cartService = cartService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            IEnumerable<ProductViewModel> products = await _productService.GetAllViewModelsAsync();
+            IEnumerable<ProductViewModel> products = _productService.GetAllViewModelsAsync();
             return View(products);
         }
 
@@ -32,7 +32,7 @@ namespace SoppingCartStore.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateProductBindingModel model)
         {
-            await _productService.Create(model);
+            await _productService.CreateAsync(model);
             return this.RedirectToAction("Index", "Products");
         }
 

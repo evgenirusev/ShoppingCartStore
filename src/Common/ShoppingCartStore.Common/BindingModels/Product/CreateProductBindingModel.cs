@@ -11,6 +11,10 @@ namespace ShoppingCartStore.Common.BindingModels.Product
 
         public string ImageURI { get; set; }
 
+        public string CategoryId { get; set; }
+
+        public string BrandId { get; set; }
+
         [Required]
         public decimal Price { get; set; }
     }

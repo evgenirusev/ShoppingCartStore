@@ -5,7 +5,7 @@ namespace ShoppingCartStore.Services.DataServices
 {
     public interface IOrderService
     {
-        Task Create(string deliveryAddress, string orderNote
+        Task CreateAsync(string deliveryAddress, string orderNote
             , string customerId, ICollection<string> itemIds);
     }
 }

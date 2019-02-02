@@ -1,15 +1,15 @@
-﻿using ShoppingCartStore.Common.BindingModels.Product;
-using ShoppingCartStore.Common.ViewModels.Product;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace ShoppingCartStore.Services.DataServices
+﻿namespace ShoppingCartStore.Services.DataServices
 {
+    using ShoppingCartStore.Common.BindingModels.Product;
+    using ShoppingCartStore.Common.ViewModels.Product;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public interface IProductService
     {
-        Task Create(CreateProductBindingModel model);
+        Task CreateAsync(CreateProductBindingModel model);
 
-        Task<IEnumerable<ProductViewModel>> GetAllViewModelsAsync();
+        ICollection<ProductViewModel> GetAllViewModelsAsync();
 
         ProductViewModel FindById(string id);
     }

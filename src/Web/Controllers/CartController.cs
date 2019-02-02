@@ -31,10 +31,10 @@
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                await _cartService.AddToPersistedCart(id, this.User.Identity.Name);
+                await _cartService.AddToPersistedCartAsync(id, this.User.Identity.Name);
             }
 
-            await _cartService.AddToSessionCart(id, HttpContext.Session);
+            await _cartService.AddToSessionCartAsync(id, HttpContext.Session);
             return this.RedirectToAction("Index", "Products");
         }
 
@@ -42,7 +42,7 @@
         {
             string customerId = _userManager
                 .FindByNameAsync(this.User.Identity.Name).Result.Id;
-            await _cartService.RemoveItemFromCart(id, customerId, HttpContext.Session);
+            await _cartService.RemoveItemFromCartAsync(id, customerId, HttpContext.Session);
             return this.RedirectToAction("Index", "Cart");
         }
     }

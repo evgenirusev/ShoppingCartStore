@@ -87,7 +87,7 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
 
-                    await _cartService.ManageCartOnCustomerLogin(HttpContext.Session, Input.Email);
+                    await _cartService.ManageCartOnCustomerLoginAsync(HttpContext.Session, Input.Email);
 
                     return LocalRedirect(returnUrl);
                 }

@@ -32,7 +32,7 @@ namespace SoppingCartStore.Web.Pages.Orders
             string customerId = _userManager
                 .FindByNameAsync(this.User.Identity.Name).Result.Id;
 
-            await _orderService.Create(Input.DeliveryAddress, Input.OrderNote
+            await _orderService.CreateAsync(Input.DeliveryAddress, Input.OrderNote
                 , customerId, Input.ItemIds);
             
             return null;
