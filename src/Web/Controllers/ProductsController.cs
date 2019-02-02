@@ -18,7 +18,7 @@ namespace SoppingCartStore.Web.Controllers
             _cartService = cartService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? pageId)
         {
             IEnumerable<ProductViewModel> products = _productService.GetAllViewModelsAsync();
             return View(products);

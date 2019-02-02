@@ -41,10 +41,10 @@
                                         <img src="http://www.indiantradebird.in/images/noimage.jpg" class="product-image">
                                     }
                                 </a>
-                                <h5 class="mt-2">@product.Name</h5>
-                                <p>$@product.Price</p>
                                 <a asp-action="Details" asp-route-id="@product.Id" asp-controller="Products">
-                                    <button class="btn btn-sm btn-info">View</button>
+                                    <h5 class="mt-2 text-dark">@product.Name</h5>
+                                    <i class="text-dark d-block">$@product.Price</i>
+                                    View
                                 </a>
                             </div>
                         </div>

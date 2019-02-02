@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using ShoppingCartStore.Common.BindingModels.Product;
     using ShoppingCartStore.Common.ViewModels.Category;
     using ShoppingCartStore.Services.DataServices;
     using System.Collections.Generic;
@@ -18,8 +19,11 @@
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            var model = new FilterBindingModel();
             List<SelectListItem> categories = _categoryService.AllSelectListItems();
-            return View(categories);
+            model.Items = categories;
+            
+            return View(model);
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿@model List<SelectListItem>
+﻿@model FilterBindingModel
 
 <h5>Categories: </h5>
 <div class="form-group">
-    <select class="form-control-sm" asp-items="@Model" ></select>
+    <select asp-for="CategoryFilterApplied" asp-items="Model.Items" class="form-control-sm" ></select>
 </div>
