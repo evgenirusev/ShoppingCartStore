@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using ShoppingCartStore.Common.BindingModels.Category;
     using ShoppingCartStore.Common.ViewModels.Category;
     using ShoppingCartStore.Data.Common.Repositories;
@@ -27,6 +28,22 @@
         public ICollection<CategoryViewModel> All()
         {
             return Mapper.Map<ICollection<CategoryViewModel>>(this.Repository.All());
+        }
+
+        public List<SelectListItem> AllSelectListItems()
+        {
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+
+            foreach(var category in this.Repository.All())
+            {
+                selectListItems.Add( new SelectListItem() {
+                    Value = category.Id, Text = category.Name, Selected = false });
+            }
+
+            selectListItems.Add(new SelectListItem() {
+                 Value = null, Text = "All", Selected = true });
+
+            return selectListItems;
         }
     }
 }

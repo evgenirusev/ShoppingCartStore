@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ShoppingCartStore.Common.BindingModels.Brand;
 using ShoppingCartStore.Common.ViewModels.Brand;
 using ShoppingCartStore.Data.Common.Repositories;
@@ -27,6 +28,30 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
         public ICollection<BrandViewModel> All()
         {
             return Mapper.Map<ICollection<BrandViewModel>>(Repository.All());
+        }
+
+        public List<SelectListItem> AllSelectListItems()
+        {
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+
+            foreach (var brand in this.Repository.All())
+            {
+                selectListItems.Add(new SelectListItem()
+                {
+                    Value = brand.Id,
+                    Text = brand.Name,
+                    Selected = false
+                });
+            }
+
+            selectListItems.Add(new SelectListItem()
+            {
+                Value = null,
+                Text = "All",
+                Selected = true
+            });
+
+            return selectListItems;
         }
     }
 }

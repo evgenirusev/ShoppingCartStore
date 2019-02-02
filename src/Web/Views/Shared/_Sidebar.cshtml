@@ -1,13 +1,16 @@
-﻿<aside>
+﻿<aside class="mb-2">
     <h2>Results:</h2>
-    <hr class="bg-info">
-    <div>
-        <h5 class="title">Categories:</h5>
-        <p>Categories are not yet implemented</p>
-    </div>
-    <hr class="bg-info">
-    <div>
-        <h5>Brands</h5>
-        <p>Brands are not implemented yet</p>
-    </div>
+    <hr class="bg-info h-2">
+    <form>
+        <div class="w-100">
+            @await Component.InvokeAsync("Categories")
+        </div>
+        <div class="w-100">
+            @await Component.InvokeAsync("Brands")
+        </div>
+        <hr class="bg-info" />
+        <div class="w-100">
+            <button type="submit" class="btn btn-md btn-info">Filter</button>
+        </div>
+    </form>
 </aside>

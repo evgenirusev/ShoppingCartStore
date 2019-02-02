@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShoppingCartStore.Common.ViewModels.Cart;
-using ShoppingCartStore.Models;
 using ShoppingCartStore.Services.DataServices;
 using System.Threading.Tasks;
 
