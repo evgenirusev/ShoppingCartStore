@@ -1,0 +1,25 @@
+﻿@page
+@model SoppingCartStore.Web.Pages.Brands.CreateModel
+
+<div class="row w-100 m-0">
+    <div class="offset-md-6 col-md-5 container w-100">
+        <h1>Create Brand</h1>
+        <hr class="bg-info h-2" />
+        <form method="post">
+                <div class="form-group">
+                    <label asp-for="Input.Name">Brand Name: </label>
+                    <input asp-for="Input.Name" type="text" required placeholder="Enter Brand Name" class="form-control form-control-lg" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+                <hr />
+                <div>
+                    <input type="submit" value="Create Brand" class="btn btn-info btn-lg btn-block" />
+                </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

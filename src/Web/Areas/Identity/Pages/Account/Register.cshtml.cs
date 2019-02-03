@@ -60,6 +60,9 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Administrator")]
+            public bool IsAdministrator { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -73,6 +76,8 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new Customer { UserName = Input.Email, Email = Input.Email };
+                // Determine weather the user is an administrator
+                var userRole = Input.IsAdministrator ? "Administrator" : "User";
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -87,6 +92,8 @@ namespace SoppingCartStore.Web.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    await _userManager.AddToRoleAsync(user, userRole);
 
                     await _cartService.ManageCartOnCustomerLoginAsync(HttpContext.Session, Input.Email);
 

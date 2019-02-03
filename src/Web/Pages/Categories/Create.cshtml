@@ -1,0 +1,31 @@
+﻿@page
+@model SoppingCartStore.Web.Pages.Categories.CreateModel
+
+<div class="row w-100 m-0">
+    <div class="offset-md-6 col-md-5 container w-100">
+        <h1>Create Category</h1>
+        <hr class="bg-info h-2" />
+        <form method="post">
+                <div class="form-group">
+                    <label asp-for="Input.Name">Category Name: </label>
+                    <input asp-for="Input.Name" type="text" required placeholder="Enter Category Name" class="form-control form-control-lg" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Description">Category Description: </label>
+                    <textarea asp-for="Input.Description" type="text" placeholder="Describe what your category is about (Not Mandatory)" class="form-control form-control-lg" rows="6">
+                    </textarea>
+                    <span asp-validation-for="Input.Description" class="text-danger"></span>
+                </div>
+                <hr />
+                <div>
+                    <input type="submit" value="Create Category" class="btn btn-info btn-lg btn-block" />
+                </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

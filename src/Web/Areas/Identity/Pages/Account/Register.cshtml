@@ -27,7 +27,16 @@
                 <input asp-for="Input.ConfirmPassword" placeholder="Confirm Your Password..." class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-info">Register</button>
+            <div class="form-group form-check text-center">
+                <div class="col-12">
+                    <label asp-for="Input.IsAdministrator" class="form-check-label"></label>
+                </div>
+                <div class="col-12">
+                    <input type="checkbox" checked asp-for="Input.IsAdministrator" class="form-check-input" />
+                    <span asp-validation-for="Input.IsAdministrator" class="text-danger"></span>
+                </div>
+            </div>
+               <button type="submit" class="btn btn-info">Register</button>
         </form>
     </div>
 </div>

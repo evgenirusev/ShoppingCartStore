@@ -1,0 +1,13 @@
+﻿@if (User.IsInRole("Administrator"))
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-page="/Categories/Create">
+            <button class="btn btn-sm btn-info">Create Category</button>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-page="/Brands/Create">
+            <button class="btn btn-sm btn-info">Create Brand</button>
+        </a>
+    </li>
+}
