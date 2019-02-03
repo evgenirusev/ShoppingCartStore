@@ -46,7 +46,7 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
 
             selectListItems.Add(new SelectListItem()
             {
-                Value = null,
+                Value = "",
                 Text = "All",
                 Selected = true
             });

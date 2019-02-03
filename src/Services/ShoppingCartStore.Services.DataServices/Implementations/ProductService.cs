@@ -2,9 +2,9 @@
 {
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
     using ShoppingCartStore.Common;
     using ShoppingCartStore.Common.BindingModels.Product;
+    using ShoppingCartStore.Common.Helpers.FilterPattern;
     using ShoppingCartStore.Common.ViewModels.Product;
     using ShoppingCartStore.Data.Common.Repositories;
     using ShoppingCartStore.Models;
@@ -40,9 +40,33 @@
             await this.Repository.SaveChangesAsync();
         }
 
+        public ICollection<ProductViewModel> 
+            GetAllViewModelsFilteredAsync(FilterBindingModel model)
+        {
+            // TODO: Refactor repository architechture efficient data retrieving
+            ICollection<Product> products = Repository.All().ToList<Product>();
+
+            // Filter design pattern
+            if (model.CategoryIdFilter != null)
+            {
+                CategoryCriteria categoryCriteria 
+                    = new CategoryCriteria(model.CategoryIdFilter);
+                products = categoryCriteria.MeetCriteria(products);
+            }
+
+            if (model.BrandIdFilter != null)
+            {
+                BrandCriteria brandCriteria = new BrandCriteria(model.BrandIdFilter);
+                products = brandCriteria.MeetCriteria(products);
+            }
+
+            return this.Mapper.Map<ICollection<ProductViewModel>>(products);
+        }
+
         public ICollection<ProductViewModel> GetAllViewModelsAsync()
         {
-            return this.Mapper.Map<ICollection<ProductViewModel>>(Repository.All());
+            return this.Mapper
+                .Map<ICollection<ProductViewModel>>(Repository.All());
         }
     }
 }

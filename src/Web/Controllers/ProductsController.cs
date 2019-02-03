@@ -18,9 +18,20 @@ namespace SoppingCartStore.Web.Controllers
             _cartService = cartService;
         }
 
-        public IActionResult Index(int? pageId)
+        public IActionResult Index(FilterBindingModel model)
         {
-            IEnumerable<ProductViewModel> products = _productService.GetAllViewModelsAsync();
+            IEnumerable<ProductViewModel> products;
+
+            // TODO: Encapsulate business logic in service layer
+            if (model.CategoryIdFilter != null || model.BrandIdFilter != null)
+            {
+                products = _productService.GetAllViewModelsFilteredAsync(model);
+            }
+            else
+            {
+                products = _productService.GetAllViewModelsAsync();
+            }
+
             return View(products);
         }
 

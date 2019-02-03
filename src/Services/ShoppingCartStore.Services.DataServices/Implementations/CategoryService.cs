@@ -1,4 +1,5 @@
-﻿namespace ShoppingCartStore.Services.DataServices.Implementations
+﻿
+namespace ShoppingCartStore.Services.DataServices.Implementations
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -36,12 +37,12 @@
 
             foreach(var category in this.Repository.All())
             {
-                selectListItems.Add( new SelectListItem() {
+                selectListItems.Add(new SelectListItem() {
                     Value = category.Id, Text = category.Name, Selected = false });
             }
 
             selectListItems.Add(new SelectListItem() {
-                 Value = null, Text = "All", Selected = true });
+                 Value = "", Text = "All", Selected = true });
 
             return selectListItems;
         }

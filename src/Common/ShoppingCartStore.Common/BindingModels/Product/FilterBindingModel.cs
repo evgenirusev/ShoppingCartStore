@@ -6,7 +6,7 @@ namespace ShoppingCartStore.Common.BindingModels.Product
     public class FilterBindingModel
     {
         public List<SelectListItem> Items { get; set; }
-        public int? CategoryFilterApplied { get; set; }
-        public int? BrandFilterApplied { get; set; }
+        public string CategoryIdFilter { get; set; }
+        public string BrandIdFilter { get; set; }
     }
 }

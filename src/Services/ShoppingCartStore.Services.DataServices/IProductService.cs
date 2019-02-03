@@ -9,6 +9,8 @@
     {
         Task CreateAsync(CreateProductBindingModel model);
 
+        ICollection<ProductViewModel> GetAllViewModelsFilteredAsync(FilterBindingModel filterBindingModel);
+
         ICollection<ProductViewModel> GetAllViewModelsAsync();
 
         ProductViewModel FindById(string id);
