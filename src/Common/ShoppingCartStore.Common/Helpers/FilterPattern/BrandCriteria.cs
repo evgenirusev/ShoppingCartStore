@@ -16,7 +16,7 @@ namespace ShoppingCartStore.Common.Helpers.FilterPattern
         {
             var filteredProducts = new List<Product>();
 
-            foreach(var product in products)
+            foreach (var product in products)
             {
                 if (product.BrandId == _brandId)
                 {

@@ -30,5 +30,7 @@ namespace ShoppingCartStore.Models
         public ICollection<Item> Items { get; set; }
 
         public ICollection<ProductsOrder> ProductsOrder { get; set; }
+
+        public ICollection<ProductsWishlists> ProductsWishlists { get; set; }
     }
 }

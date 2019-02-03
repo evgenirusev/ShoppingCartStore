@@ -16,18 +16,18 @@
     [Authorize]
     public class CreateModel : PageModel
     {
-        private IDepositService _depositService;
-        private ICreditCardService _creditCardService;
-        private UserManager<Customer> _userManager;
+        private IDepositService depositService;
+        private ICreditCardService creditCardService;
+        private UserManager<Customer> userManager;
 
         public CreateModel(IDepositService depositService,
             ICreditCardService creditCardService,
             UserManager<Customer> userManager)
         {
-            _depositService = depositService;
-            _creditCardService = creditCardService;
-            _userManager = userManager;
-            CreditCardItems = new List<SelectListItem>();
+            this.depositService = depositService;
+            this.creditCardService = creditCardService;
+            this.userManager = userManager;
+            this.CreditCardItems = new List<SelectListItem>();
         }
 
         [BindProperty]
@@ -37,18 +37,18 @@
 
         public async Task OnGetAsync()
         {
-            Customer customer = await _userManager.FindByNameAsync(this.User.Identity.Name);
-            var cardsFromDb = (await _creditCardService.GetAllCreditCardsAsync(customer.Id));
+            Customer customer = await this.userManager.FindByNameAsync(this.User.Identity.Name);
+            var cardsFromDb = (await this.creditCardService.GetAllCreditCardsAsync(customer.Id));
 
             foreach (CreditCardViewModel creditCard in cardsFromDb)
             {
                 this.CreditCardItems.Add(
                     new SelectListItem
                     {
-                        Value = creditCard.Id,
+                        Value = creditCard.Id.ToString(),
                         Text = String.Format("Card Number: {0}", creditCard.Number)
                     }
-                );
+                    );
             }
         }
 
@@ -59,7 +59,7 @@
                 return this.Page();
             }
 
-            await _depositService.CreateDepositAsync(this.Input, this.User.Identity.Name);
+            await this.depositService.CreateDepositAsync(this.Input, this.User.Identity.Name);
 
             return this.RedirectToPage("/Deposit/Success");
         }

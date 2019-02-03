@@ -21,6 +21,22 @@
         
         public DbSet<Order> Orders { get; set; }
 
+        public DbSet<ProductsOrder> ProductsOrders { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Brand> Brands { get; set; }
+
+        public DbSet<CreditCard> CreditCards { get; set; }
+
+        public DbSet<Deposit> Deposits { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
+
+        public DbSet<Wishlist> Wishlists { get; set; }
+
+        public DbSet<ProductsWishlists> ProductsWishlists { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Cart>()
@@ -71,6 +87,17 @@
                 .HasOne(t => t.Customer)
                 .WithMany(c => c.Transactions)
                 .HasForeignKey(t => t.CustomerId);
+
+            builder.Entity<ProductsWishlists>()
+                .HasKey(pw => new { pw.WishlistId, pw.ProductId });
+            builder.Entity<ProductsWishlists>()
+                .HasOne(pw => pw.Wishlist)
+                .WithMany(w => w.ProductsWishlists)
+                .HasForeignKey(pw => pw.WishlistId);
+            builder.Entity<ProductsWishlists>()
+                .HasOne(pw => pw.Product)
+                .WithMany(p => p.ProductsWishlists)
+                .HasForeignKey(pw => pw.ProductId);
 
             base.OnModelCreating(builder);
         }
