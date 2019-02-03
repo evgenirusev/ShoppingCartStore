@@ -12,11 +12,14 @@ namespace SoppingCartStore.Web.Pages.Orders
     {
         private IOrderService _orderService;
         private UserManager<Customer> _userManager;
+        private ICartService _cartService;
 
-        public CreateModel(IOrderService orderService, UserManager<Customer> userManager)
+        public CreateModel(IOrderService orderService
+            , UserManager<Customer> userManager, ICartService cartService)
         {
             _orderService = orderService;
             _userManager = userManager;
+            _cartService = cartService;
         }
 
         [BindProperty]
@@ -34,6 +37,8 @@ namespace SoppingCartStore.Web.Pages.Orders
 
             await _orderService.CreateAsync(Input.DeliveryAddress, Input.OrderNote
                 , customerId, Input.ItemIds);
+
+            _cartService.ClearSessionCart(HttpContext.Session);
 
             return this.RedirectToPage("/Orders/Success");
         }
