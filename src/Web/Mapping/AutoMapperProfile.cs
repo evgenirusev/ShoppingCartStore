@@ -2,11 +2,13 @@
 using ShoppingCartStore.Common.BindingModels.Brand;
 using ShoppingCartStore.Common.BindingModels.Category;
 using ShoppingCartStore.Common.BindingModels.CreditCard;
+using ShoppingCartStore.Common.BindingModels.Deposit;
 using ShoppingCartStore.Common.BindingModels.Product;
 using ShoppingCartStore.Common.ViewModels.Brand;
 using ShoppingCartStore.Common.ViewModels.Category;
 using ShoppingCartStore.Common.ViewModels.CreditCard;
 using ShoppingCartStore.Common.ViewModels.Order;
+using ShoppingCartStore.Common.ViewModels.Transaction;
 using ShoppingCartStore.Models;
 
 namespace SoppingCartStore.Web.Mapping
@@ -20,6 +22,8 @@ namespace SoppingCartStore.Web.Mapping
             ConfigureBrands();
             ConfigureOrders();
             ConfigureCreditCards();
+            ConfigureDeposits();
+            ConfigureTransactions();
         }
 
         private void ConfigureProducts()
@@ -49,6 +53,16 @@ namespace SoppingCartStore.Web.Mapping
         {
             this.CreateMap<CreateCreditCardBindingModel, CreditCard>();
             this.CreateMap<CreditCard, CreditCardViewModel>();
+        }
+
+        private void ConfigureDeposits()
+        {
+            this.CreateMap<CreateDepositBindingModel, Deposit>();
+        }
+
+        private void ConfigureTransactions()
+        {
+            this.CreateMap<Transaction, TransactionViewModel>();
         }
     }
 }

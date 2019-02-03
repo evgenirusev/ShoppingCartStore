@@ -67,6 +67,11 @@
                 .WithMany(c => c.Deposits)
                 .HasForeignKey(d => d.CustomerId);
 
+            builder.Entity<Transaction>()
+                .HasOne(t => t.Customer)
+                .WithMany(c => c.Transactions)
+                .HasForeignKey(t => t.CustomerId);
+
             base.OnModelCreating(builder);
         }
     }

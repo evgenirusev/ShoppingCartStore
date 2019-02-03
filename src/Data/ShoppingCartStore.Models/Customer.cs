@@ -20,5 +20,7 @@
          public ICollection<CreditCard> CreditCards { get; set; }
 
         public ICollection<Deposit> Deposits { get; set; }
+
+        public ICollection<Transaction> Transactions { get; set; }
     }
 }

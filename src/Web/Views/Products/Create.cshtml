@@ -24,11 +24,11 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
-                    <input asp-for="Price" type="text" required placeholder="How Does it Cost..." class="form-control" />
+                    <input asp-for="Price" type="text" required placeholder="How Much Does it Cost..." class="form-control" />
                 </div>
                 <span asp-validation-for="Price" class="text-danger"></span>
                 <div class="form-group">
-                    <label asp-for="Description">Order Note:</label>
+                    <label asp-for="Description">Product Description:</label>
                     <textarea asp-for="Description" class="form-control" placeholder="Describe your product..." rows="5"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
