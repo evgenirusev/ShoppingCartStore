@@ -1,15 +1,20 @@
 ﻿namespace SoppingCartStore.Web.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using ShoppingCartStore.Common.BindingModels.CreditCard;
+    using ShoppingCartStore.Models;
+    using ShoppingCartStore.Services.DataServices;
+    using System.Threading.Tasks;
 
     [Authorize]
     public class CreditCardsController : Controller
     {
         private ICreditCardService creditCardService;
-        private UserManager<Client> userManager;
+        private UserManager<Customer> userManager;
 
-        public CreditCardsController(ICreditCardService creditCardService, UserManager<Client> userManager)
+        public CreditCardsController(ICreditCardService creditCardService, UserManager<Customer> userManager)
         {
             this.creditCardService = creditCardService;
             this.userManager = userManager;
@@ -30,13 +35,13 @@
 
             await this.creditCardService.Create(model, this.User.Identity.Name);
 
-            return this.RedirectToAction(ActionConstants.Index, ControllerConstants.CreditCards);
+            return this.RedirectToAction("Index", "CreditCards");
         }
 
         public async Task<IActionResult> Index()
         {
-            string clientId = await ClientHelper.GetUserIdAsync(this.User.Identity.Name, this.userManager);
-            var creditCards = await this.creditCardService.GetAllCreditCardsAsync(clientId);
+            string customerId = (await userManager.FindByNameAsync(this.User.Identity.Name)).Id;
+            var creditCards = await this.creditCardService.GetAllCreditCardsAsync(customerId);
             return View(creditCards);
         }
     }

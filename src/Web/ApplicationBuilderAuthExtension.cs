@@ -35,6 +35,8 @@
                 
                 foreach (var role in roles)
                 {
+                    // If there is a runtime exception here, simply run
+                    // "update-database" in the command line
                     if (!await roleManager.RoleExistsAsync(role.Name))
                     {
                         await roleManager.CreateAsync(role);

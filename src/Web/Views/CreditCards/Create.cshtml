@@ -1,0 +1,38 @@
+﻿@model CreateCreditCardBindingModel
+
+@{
+    ViewData["Title"] = "Add Card";
+}
+<div class="row w-100 m-0">
+    <div class="offset-md-6 col-md-5 container w-100">
+        <h2>@ViewData["Title"]</h2>
+        <hr class="hr-2" />
+        <form method="post" action="Create">
+            <div class="form-group">
+                <div class="form-group">
+                    <label asp-for="Number"></label>
+                    <input asp-for="Number" type="text" required placeholder="Enter card number..." class="form-control" />
+                    <span asp-validation-for="Number" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CVV"></label>
+                    <input asp-for="CVV" type="text" required placeholder="The number on the back of your card..." class="form-control" />
+                    <span asp-validation-for="CVV" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ExpirationDate"></label>
+                    <input asp-for="ExpirationDate" type="date" class="form-control" />
+                    <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+                </div>
+                <div>
+                    <input type="submit" value="Add Card" class="btn btn-info btn-lg btn-block" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}

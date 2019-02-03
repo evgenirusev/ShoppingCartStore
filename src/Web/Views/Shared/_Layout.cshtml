@@ -42,6 +42,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Create">Create Product</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" id="navbarDropdown" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                Credit Cards
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="customersDropdown">
+                                <a class="dropdown-item" asp-controller="CreditCards" asp-action="Index">My Cards</a>
+                                <a class="dropdown-item" asp-controller="CreditCards" asp-action="Create">Create Card</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="">Deposit</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
