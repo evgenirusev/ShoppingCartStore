@@ -34,8 +34,8 @@ namespace SoppingCartStore.Web.Pages.Orders
 
             await _orderService.CreateAsync(Input.DeliveryAddress, Input.OrderNote
                 , customerId, Input.ItemIds);
-            
-            return null;
+
+            return this.RedirectToPage("/Orders/Success");
         }
     }
 }

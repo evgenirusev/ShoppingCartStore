@@ -46,7 +46,7 @@
                             </div>
                             <div class="col mt-3">
                                 <a asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@Model.Items[i].Product.Id">
-                                    <i class="text-white bg-danger p-1">Remove</i>
+                                    <i class="text-danger">Remove</i>
                                 </a>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
             </div>
             <hr class="bg-info" />
             <div class="col">
-                <p>Subtotal: @Model.Price</p>
+                <p>Subtotal: <i class="text-success">$@Model.Price</i></p>
                 <hr />
             </div>
             <div class="col">
@@ -73,7 +73,7 @@
                 <hr />
             </div>
             <div class="col">
-                <p>Order Total: @Model.Price</p>
+                <p>Order Total: <i class="text-success">$@Model.Price</i></p>
                 <hr />
             </div>
             @if (Model.Items != null)

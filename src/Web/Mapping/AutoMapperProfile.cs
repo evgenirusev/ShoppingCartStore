@@ -4,6 +4,7 @@ using ShoppingCartStore.Common.BindingModels.Category;
 using ShoppingCartStore.Common.BindingModels.Product;
 using ShoppingCartStore.Common.ViewModels.Brand;
 using ShoppingCartStore.Common.ViewModels.Category;
+using ShoppingCartStore.Common.ViewModels.Order;
 using ShoppingCartStore.Models;
 
 namespace SoppingCartStore.Web.Mapping
@@ -15,6 +16,7 @@ namespace SoppingCartStore.Web.Mapping
             ConfigureProducts();
             ConfigureCategories();
             ConfigureBrands();
+            ConfigureOrders();
         }
 
         private void ConfigureProducts()
@@ -33,6 +35,11 @@ namespace SoppingCartStore.Web.Mapping
         {
             this.CreateMap<CreateBrandBindingModel, Brand>();
             this.CreateMap<Brand, BrandViewModel>();
+        }
+
+        private void ConfigureOrders()
+        {
+            this.CreateMap<Order, OrderViewModel>();
         }
     }
 }

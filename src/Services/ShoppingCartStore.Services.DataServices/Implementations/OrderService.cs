@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using ShoppingCartStore.Common.ViewModels.Order;
 using ShoppingCartStore.Data.Common.Repositories;
 using ShoppingCartStore.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShoppingCartStore.Services.DataServices.Implementations
@@ -46,6 +48,13 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
 
             await this.Repository.AddAsync(order);
             await this.Repository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<OrderViewModel>> GetAllOrdersAsync(string customerId)
+        {
+            var orderEntities = this.Repository
+                .All().Where(o => o.CustomerId == customerId);
+            return this.Mapper.Map<ICollection<OrderViewModel>>(orderEntities);
         }
     }
 }

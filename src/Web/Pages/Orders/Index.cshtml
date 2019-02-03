@@ -1,0 +1,34 @@
+﻿@page
+@model SoppingCartStore.Web.Pages.Orders.IndexModel
+
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <hr class="hr-2" />
+    @if (Model.ViewModels.Count() > 0)
+    {
+        <table class="table table-hover table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Order Date</th>
+                    <th>Delivery Address</th>
+                    <th>Order Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.ViewModels)
+                {
+                    <tr>
+                        <td>@order.CreatedAt</td>
+                        <td>@order.DeliveryAddress</td>
+                        <td>@order.OrderNote</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h4><i>You have not made any orders yet.</i></h4>
+    }
+</div>
