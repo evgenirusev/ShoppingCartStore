@@ -23,7 +23,8 @@ namespace SoppingCartStore.Web.Controllers
             IEnumerable<ProductViewModel> products;
 
             // TODO: Encapsulate business logic in service layer
-            if (model.CategoryIdFilter != null || model.BrandIdFilter != null)
+            if (model.CategoryIdFilter != null || model.BrandIdFilter != null 
+                || model.SearchFilter != null)
             {
                 products = _productService.GetAllViewModelsFilteredAsync(model);
             }

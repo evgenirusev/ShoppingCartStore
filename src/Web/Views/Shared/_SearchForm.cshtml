@@ -1,4 +1,17 @@
-﻿<form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" value="Search" aria-label="Search">
-    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+﻿<form method="get">
+    <div class="row">
+        <div class="col-md-4">
+            @await Component.InvokeAsync("Categories")
+        </div>
+        <div class="col-md-4">
+            @await Component.InvokeAsync("Brands")
+        </div>
+        <div class="col-md-4">
+            <h5>Search:</h5>
+            <div class=d-flex>
+                <input name="SearchFilter" class="form-control mr-sm-2" type="search" placeholder="By name" aria-label="Search">
+                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Filter</button>
+            </div>
+        </div>
+    </div>
 </form>

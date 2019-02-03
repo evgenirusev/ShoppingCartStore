@@ -60,6 +60,13 @@
                 products = brandCriteria.MeetCriteria(products);
             }
 
+            if (model.SearchFilter != null)
+            {
+                SearchCriteria searchCriteria =
+                    new SearchCriteria(model.SearchFilter);
+                products = searchCriteria.MeetCriteria(products);
+            }
+
             return this.Mapper.Map<ICollection<ProductViewModel>>(products);
         }
 
