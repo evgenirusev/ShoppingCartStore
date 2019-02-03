@@ -16,5 +16,9 @@
         public Cart Cart { get; set; }
 
         public IEnumerable<Order> Orders { get; set; }
+
+         public ICollection<CreditCard> CreditCards { get; set; }
+
+        public ICollection<Deposit> Deposits { get; set; }
     }
 }

@@ -57,6 +57,16 @@
                 .WithMany(b => b.Products)
                 .HasForeignKey(p => p.BrandId);
 
+            builder.Entity<CreditCard>()
+                .HasOne(cc => cc.Customer)
+                .WithMany(c => c.CreditCards)
+                .HasForeignKey(cc => cc.CustomerId);
+
+            builder.Entity<Deposit>()
+                .HasOne(d => d.Customer)
+                .WithMany(c => c.Deposits)
+                .HasForeignKey(d => d.CustomerId);
+
             base.OnModelCreating(builder);
         }
     }

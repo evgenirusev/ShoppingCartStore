@@ -17,6 +17,7 @@ namespace SoppingCartStore.Web.Mapping
             ConfigureCategories();
             ConfigureBrands();
             ConfigureOrders();
+            ConfigureCredits();
         }
 
         private void ConfigureProducts()
@@ -40,6 +41,11 @@ namespace SoppingCartStore.Web.Mapping
         private void ConfigureOrders()
         {
             this.CreateMap<Order, OrderViewModel>();
+        }
+
+        private void ConfigureCredits()
+        {
+            this.CreateMap<Credit, CreditViewModel>();
         }
     }
 }
