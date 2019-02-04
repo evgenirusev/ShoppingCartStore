@@ -36,8 +36,14 @@
             }
         </div>
         <hr></hr>
-        <form asp-action="AddToCart" asp-route-id="@Model.Id" asp-controller="Cart">
-            <button class="btn btn-info">Add to cart</button>
-        </form>
+        <div class="d-flex justify-content-around">
+            <form asp-action="AddToCart" asp-route-id="@Model.Id" asp-controller="Cart">
+                <button class="btn btn-success">Add to cart</button>
+            </form>
+
+            <form asp-action="AddToWishlist" asp-route-id="@Model.Id" asp-controller="Wishlist">
+                <button class="btn btn-info">Add to Wishlist</button>
+            </form>
+        </div>
     </div>
 </div>

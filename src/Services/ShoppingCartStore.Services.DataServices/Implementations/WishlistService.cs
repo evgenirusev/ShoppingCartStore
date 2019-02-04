@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
+    using ShoppingCartStore.Common.ViewModels.Wishlist;
     using ShoppingCartStore.Data.Common.Repositories;
     using ShoppingCartStore.Models;
 
@@ -24,6 +25,8 @@
             pw.WishlistId = wishlist.Id;
 
             wishlist.ProductsWishlists.Add(pw);
+
+            await this.Repository.SaveChangesAsync();
         }
 
         private async Task<Wishlist> GetWishListAsync(string customerId)
@@ -48,6 +51,14 @@
             await Repository.SaveChangesAsync();
 
             return wishlist;
+        }
+
+        public async Task<WishlistViewModel> FindByCustomerId(string customerId)
+        {
+            var wishlist = this.Repository.All()
+                .Where(wl => wl.CustomerId == customerId);
+
+            return null;
         }
     }
 }

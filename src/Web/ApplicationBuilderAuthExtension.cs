@@ -35,8 +35,8 @@
                 
                 foreach (var role in roles)
                 {
-                    // If there is a runtime exception here, simply run
-                    // "update-database" in the command line
+                    // If you encounter a runtime exception here, simply execute
+                    // 'update-database' in the command line
                     if (!await roleManager.RoleExistsAsync(role.Name))
                     {
                         await roleManager.CreateAsync(role);
@@ -121,7 +121,7 @@
                 new CreateProductBindingModel() { Name = "Panasonic HD W180", Price = 499.99M, CategoryId = "1c2453a3-0ca7-4c55-a4a4-baeaa4843a38", BrandId = "3ce3e570-bdeb-475a-be70-1b317158e622", Description = "Moving beyond its new design, additional enhancements and improvements in the Panasonic W180 include wireless charging capabilities, a faster 10-nanometer, six-core A11 Bionic processor that offers higher performance while utilizing less power, an all-glass body, a front-facing camera that's integrated into the display.", ImageURI = "https://i1.adis.ws/i/pcec/HC-W580K_ALT01?$PLP-Product-Thumbnail-Desktop$" },
                 new CreateProductBindingModel() { Name = "Panasonic HQ220", Price = 599.99M, CategoryId = "1c2453a3-0ca7-4c55-a4a4-baeaa4843a38", BrandId = "3ce3e570-bdeb-475a-be70-1b317158e622", Description = "Moving beyond its new design, additional enhancements and improvements in the Panasonic HQ220 include wireless charging capabilities, a faster 10-nanometer, six-core A11 Bionic processor that offers higher performance while utilizing less power, an all-glass body, a front-facing camera that's integrated into the display.", ImageURI = "https://www.bhphotovideo.com/images/images2500x2500/panasonic_dmc_fh10k_lumix_dmc_fh10_digital_camera_910528.jpg" },
                 new CreateProductBindingModel() { Name = "Samsung Galaxy S9", Price = 399.95M, CategoryId = "d8b0d5b4-8272-441d-bfe2-d563ee2b6f2e", BrandId = "14f01a3d-0269-406b-8bc8-f71f0016d0d5", Description = "Moving beyond its new design, additional enhancements and improvements in the Samsung Galaxy include wireless charging capabilities, a faster 10-nanometer, six-core A11 Bionic processor that offers higher performance while utilizing less power, an all-glass body, a front-facing camera that's integrated into the display.", ImageURI = "https://images.samsung.com/is/image/samsung/p5/levant/smartphones/galaxy-note9_blue.png?$ORIGIN_PNG$" },
-                new CreateProductBindingModel() { Name = "Samsung Galaxy S5", Price = 399.95M, CategoryId = "d8b0d5b4-8272-441d-bfe2-d563ee2b6f2e", BrandId = "14f01a3d-0269-406b-8bc8-f71f0016d0d5", Description = "Moving beyond its new design, additional enhancements and improvements in the Samsung Galaxy include wireless charging capabilities, a faster 10-nanometer, six-core A11 Bionic processor that offers higher performance while utilizing less power, an all-glass body, a front-facing camera that's integrated into the display.", ImageURI = "https://cdn2.gsmarena.com/vv/bigpic/samsung-galaxy-j7-2018.jpg" }
+                new CreateProductBindingModel() { Name = "Samsung Galaxy S5", Price = 399.95M, CategoryId = "d8b0d5b4-8272-441d-bfe2-d563ee2b6f2e", BrandId = "14f01a3d-0269-406b-8bc8-f71f0016d0d5", Description = "Moving beyond its new design, additional enhancements and improvements in the Samsung Galaxy include wireless charging capabilities, a faster 10-nanometer, six-core A11 Bionic processor that offers higher performance while utilizing less power, an all-glass body, a front-facing camera that's integrated into the display.", ImageURI = "https://images-na.ssl-images-amazon.com/images/I/71CgRbIhIIL._SL1500_.jpg" }
             };
         }
     }
