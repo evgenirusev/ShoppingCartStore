@@ -29,8 +29,19 @@
         {
             string customerId = (await _userManager
                 .FindByNameAsync(this.User.Identity.Name)).Id;
+
+            if (await _wishlistService.DoesProductAlreadyExist(id, customerId))
+            {
+                return this.RedirectToAction("ProductExistsErrorPage", "Wishlist");
+            }
+
             await _wishlistService.AddToWishlistAsync(id, customerId);
             return this.RedirectToAction("Index", "Products");
+        }
+
+        public IActionResult ProductExistsErrorPage()
+        {
+            return View();
         }
     }
 }

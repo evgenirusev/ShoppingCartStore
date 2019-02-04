@@ -7,5 +7,7 @@
     public interface IProductsWishlistsService
     {
         ICollection<ProductViewModel> FindProductsByWishlist(WishlistServiceModel wishlist);
+
+        bool ProductAlreadyExists(WishlistServiceModel wl, string productId);
     }
 }

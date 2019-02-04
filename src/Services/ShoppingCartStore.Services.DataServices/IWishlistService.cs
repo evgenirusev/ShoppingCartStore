@@ -9,5 +9,7 @@
         Task AddToWishlistAsync(string productId, string customerId);
 
         Task<ICollection<ProductViewModel>> FindWishlistProductsByCustomerId(string customerId);
+
+        Task<bool> DoesProductAlreadyExist(string productId, string customerId);
     }
 }

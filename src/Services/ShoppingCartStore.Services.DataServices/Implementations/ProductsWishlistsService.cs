@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
     using ShoppingCartStore.Common.ServiceModels.Wishlist;
@@ -33,5 +34,20 @@
 
             return wlProducts;
         }
+
+        public bool ProductAlreadyExists(WishlistServiceModel wlServiceModel, string productId)
+        {
+            ICollection<ProductsWishlists> productMatches = this.Repository
+                .All().Where(wl => wl.WishlistId == wlServiceModel.Id 
+                && wl.ProductId == productId).ToList();
+
+            if (productMatches.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

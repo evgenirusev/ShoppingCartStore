@@ -71,5 +71,16 @@
 
             return _productsWishlistsService.FindProductsByWishlist(wlServiceModel);
         }
+
+        public async Task<bool> DoesProductAlreadyExist(string productId, string customerId)
+        {
+            var wlEntity = await GetWishListAsync(customerId);
+            var wlServiceModel = new WishlistServiceModel();
+
+            wlServiceModel.CustomerId = customerId;
+            wlServiceModel.Id = wlEntity.Id;
+
+            return _productsWishlistsService.ProductAlreadyExists(wlServiceModel, productId);
+        }
     }
 }

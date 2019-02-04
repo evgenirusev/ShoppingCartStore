@@ -18,12 +18,7 @@
         <img src="@Model.ImageURI" class="product-details-image">
     </div>
     <div class="col-md-4">
-        <h2 class="mb-4">Brand: <a href="#">Apple</a></h2>
         <hr class="hr-2 bg-info">
-        <div class="d-flex justify-content-between">
-            <h4>Price @Model.Price</h4>
-        </div>
-        <hr>
         <div class="mb-5">
             <h3>Description:</h3>
             @if (@Model.Description != null)
@@ -35,7 +30,12 @@
                 <p>This product does not have a description.</p>
             }
         </div>
-        <hr></hr>
+        <hr>
+        <div class="d-flex justify-content-between">
+            <h4>Price: <i class="text-success">$@Model.Price</i></h4>
+        </div>
+        <hr>
+        </hr>
         <div class="d-flex justify-content-around">
             <form asp-action="AddToCart" asp-route-id="@Model.Id" asp-controller="Cart">
                 <button class="btn btn-success">Add to cart</button>
