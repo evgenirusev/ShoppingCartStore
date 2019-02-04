@@ -4,8 +4,8 @@
     using ShoppingCartStore.Common.ViewModels.Product;
     using System.Collections.Generic;
 
-    interface IProductsWishlistsService
+    public interface IProductsWishlistsService
     {
-        ICollection<ProductViewModel> FindByWishlistId(WishlistServiceModel wishlist);
+        ICollection<ProductViewModel> FindProductsByWishlist(WishlistServiceModel wishlist);
     }
 }

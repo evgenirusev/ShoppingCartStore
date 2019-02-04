@@ -21,7 +21,7 @@
             _productService = productService;
         }
 
-        public ICollection<ProductViewModel> FindByWishlistId(WishlistServiceModel wishlist)
+        public ICollection<ProductViewModel> FindProductsByWishlist(WishlistServiceModel wishlist)
         {
             var wlists = this.Repository.All().Where(wl => wl.WishlistId == wishlist.Id);
             ICollection<ProductViewModel> wlProducts = new List<ProductViewModel>();

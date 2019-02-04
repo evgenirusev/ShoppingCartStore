@@ -8,6 +8,6 @@
     {
         Task AddToWishlistAsync(string productId, string customerId);
 
-        Task<ICollection<ProductViewModel>> FindByCustomerId(string customerId);
+        Task<ICollection<ProductViewModel>> FindWishlistProductsByCustomerId(string customerId);
     }
 }

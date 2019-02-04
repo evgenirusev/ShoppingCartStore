@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
+    using ShoppingCartStore.Common.ServiceModels.Wishlist;
     using ShoppingCartStore.Common.ViewModels.Product;
     using ShoppingCartStore.Data.Common.Repositories;
     using ShoppingCartStore.Models;
@@ -12,12 +13,15 @@
     public class WishlistService : BaseService<Wishlist>, IWishlistService
     {
         private IProductService _productService;
+        private IProductsWishlistsService _productsWishlistsService;
 
-        public WishlistService(IRepository<Wishlist> repository, IMapper mapper
-            , UserManager<Customer> userManager, IProductService productService)
+        public WishlistService(IRepository<Wishlist> repository, IMapper mapper,
+            UserManager<Customer> userManager, IProductService productService, 
+            IProductsWishlistsService productsWishlistsService)
             : base(repository, mapper, userManager)
         {
             _productService = productService;
+            _productsWishlistsService = productsWishlistsService;
         }
 
         public async Task AddToWishlistAsync(string productId, string customerId)
@@ -57,9 +61,15 @@
             return wishlist;
         }
 
-        Task<ICollection<ProductViewModel>> IWishlistService.FindByCustomerId(string customerId)
+        public async Task<ICollection<ProductViewModel>> FindWishlistProductsByCustomerId(string customerId)
         {
-            throw new System.NotImplementedException();
+            var wlEntity = await this.GetWishListAsync(customerId);
+            var wlServiceModel = new WishlistServiceModel();
+
+            wlServiceModel.CustomerId = customerId;
+            wlServiceModel.Id = wlEntity.Id;
+
+            return _productsWishlistsService.FindProductsByWishlist(wlServiceModel);
         }
     }
 }

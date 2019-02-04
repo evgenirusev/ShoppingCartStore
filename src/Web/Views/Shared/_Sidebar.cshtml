@@ -2,6 +2,13 @@
     <h2>Wish List:</h2>
     <hr class="bg-info h-2">
     <div>
-
+        @if (User.Identity.IsAuthenticated)
+        {
+            @await Component.InvokeAsync("Wishlist")
+        }
+        else
+        {
+            <h4>Sign in to view you wishlist.</h4>
+        }
     </div>
 </aside>
