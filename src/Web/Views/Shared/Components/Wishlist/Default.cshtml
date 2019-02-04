@@ -2,5 +2,11 @@
 
 @foreach(var product in Model)
 {
-    <i>@product.Name</i>
+<div>
+    <i>@product.Name, </i>
+    <i class="text-success">$@product.Price</i>
+    <hr />
+</div>
 }
+
+<h5>Total: <i class="text-success">$@Model.Sum(p => p.Price)</i></h5>
