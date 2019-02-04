@@ -18,15 +18,6 @@
             _userManager = userManager;
         }
 
-        [Authorize]
-        public IActionResult Index()
-        {
-            string customerId = _userManager
-                .FindByNameAsync(this.User.Identity.Name).Result.Id;
-            var cartViewModel = _cartService.GetCartViewModelByCustomerId(customerId);
-            return View(cartViewModel);
-        }
-
         public async Task<IActionResult> AddToCart(string id)
         {
             if (this.User.Identity.IsAuthenticated)

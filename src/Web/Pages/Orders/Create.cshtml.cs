@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ShoppingCartStore.Common.BindingModels.Order;
+using ShoppingCartStore.Common.ViewModels.Cart;
 using ShoppingCartStore.Models;
 using ShoppingCartStore.Services.DataServices;
 using System.Threading.Tasks;
@@ -10,20 +10,28 @@ namespace SoppingCartStore.Web.Pages.Orders
 {
     public class CreateModel : PageModel
     {
-        private IOrderService _orderService;
+        private IProductService _productService;
         private UserManager<Customer> _userManager;
         private ICartService _cartService;
+        private IOrderService _orderService;
 
-        public CreateModel(IOrderService orderService
-            , UserManager<Customer> userManager, ICartService cartService)
+        public CreateModel(IProductService productService
+            , UserManager<Customer> userManager, ICartService cartService,
+            IOrderService orderService)
         {
-            _orderService = orderService;
+            _productService = productService;
             _userManager = userManager;
             _cartService = cartService;
+            _orderService = orderService;
         }
 
         [BindProperty]
-        public CreateOrderBindingModel Input { get; set; }
+        public CartViewModel Input { get; set; }
+
+        public async Task OnGet()
+        {
+            await this.InitModel();
+        }
 
         public async Task<IActionResult> OnPost()
         {
@@ -35,12 +43,20 @@ namespace SoppingCartStore.Web.Pages.Orders
             string customerId = _userManager
                 .FindByNameAsync(this.User.Identity.Name).Result.Id;
 
-            await _orderService.CreateAsync(Input.DeliveryAddress, Input.OrderNote
-                , customerId, Input.ItemIds);
+            await _orderService.CreateAsync(Input.CreateOrderBindingModel.DeliveryAddress,
+                Input.CreateOrderBindingModel.OrderNote
+                , customerId, Input.CreateOrderBindingModel.ItemIds);
 
             _cartService.ClearSessionCart(HttpContext.Session);
 
             return this.RedirectToPage("/Orders/Success");
+        }
+
+        private async Task InitModel()
+        {
+            var customer = await _userManager.FindByNameAsync(this.User.Identity.Name);
+            this.Input.CustomerBalance = customer.Balance;
+            this.Input = _cartService.GetCartViewModelByCustomerId(customer.Id);
         }
     }
 }

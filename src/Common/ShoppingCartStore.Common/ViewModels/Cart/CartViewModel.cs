@@ -12,9 +12,11 @@ namespace ShoppingCartStore.Common.ViewModels.Cart
         }
 
         public List<ItemViewModel> Items { get; set; }
-        
-        public decimal Price { get; set; }
 
         public CreateOrderBindingModel CreateOrderBindingModel { get; set; }
+
+        public decimal Price { get; set; }
+
+        public decimal CustomerBalance { get; set; }
     }
 }
