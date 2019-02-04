@@ -1,6 +1,7 @@
 ﻿namespace ShoppingCartStore.Services.DataServices
 {
     using ShoppingCartStore.Common.BindingModels.Product;
+    using ShoppingCartStore.Common.ServiceModels.Wishlist;
     using ShoppingCartStore.Common.ViewModels.Product;
     using System.Collections.Generic;
     using System.Threading.Tasks;

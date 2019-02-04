@@ -1,19 +1,23 @@
 ﻿namespace ShoppingCartStore.Services.DataServices.Implementations
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
-    using ShoppingCartStore.Common.ViewModels.Wishlist;
+    using ShoppingCartStore.Common.ViewModels.Product;
     using ShoppingCartStore.Data.Common.Repositories;
     using ShoppingCartStore.Models;
 
     public class WishlistService : BaseService<Wishlist>, IWishlistService
     {
+        private IProductService _productService;
+
         public WishlistService(IRepository<Wishlist> repository, IMapper mapper
-            , UserManager<Customer> userManager)
+            , UserManager<Customer> userManager, IProductService productService)
             : base(repository, mapper, userManager)
         {
+            _productService = productService;
         }
 
         public async Task AddToWishlistAsync(string productId, string customerId)
@@ -53,12 +57,9 @@
             return wishlist;
         }
 
-        public async Task<WishlistViewModel> FindByCustomerId(string customerId)
+        Task<ICollection<ProductViewModel>> IWishlistService.FindByCustomerId(string customerId)
         {
-            var wishlist = this.Repository.All()
-                .Where(wl => wl.CustomerId == customerId);
-
-            return null;
+            throw new System.NotImplementedException();
         }
     }
 }

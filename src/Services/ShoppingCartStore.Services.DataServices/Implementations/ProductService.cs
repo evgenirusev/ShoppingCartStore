@@ -5,6 +5,7 @@
     using ShoppingCartStore.Common;
     using ShoppingCartStore.Common.BindingModels.Product;
     using ShoppingCartStore.Common.Helpers.FilterPattern;
+    using ShoppingCartStore.Common.ServiceModels.Wishlist;
     using ShoppingCartStore.Common.ViewModels.Product;
     using ShoppingCartStore.Data.Common.Repositories;
     using ShoppingCartStore.Models;
