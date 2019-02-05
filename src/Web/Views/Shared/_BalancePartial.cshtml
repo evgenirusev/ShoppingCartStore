@@ -1,0 +1,4 @@
+﻿@if (User.IsInRole("Administrator"))
+{
+    @await Component.InvokeAsync("Balance")
+}
