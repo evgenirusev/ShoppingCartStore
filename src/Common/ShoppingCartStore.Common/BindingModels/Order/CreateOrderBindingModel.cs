@@ -4,6 +4,11 @@ namespace ShoppingCartStore.Common.BindingModels.Order
 {
     public class CreateOrderBindingModel
     {
+        public CreateOrderBindingModel()
+        {
+            ItemIds = new List<string>();
+        }
+
         public string DeliveryAddress { get; set; }
         
         public string OrderNote { get; set; }

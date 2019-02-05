@@ -75,6 +75,16 @@
             </div>
             <div class="col">
                 <p>Order Total: <i class="text-success">$@Model.Input.Price</i></p>
+                <input asp-for="Input.Price" type="hidden" value="@Model.Input.Price" class="form-control" />
+                <hr />
+            </div>
+            <div class="col">
+                <p>Your Balance: <i class="text-success">$@Model.Input.CustomerBalance</i></p>
+                <input asp-for="Input.CustomerBalance" type="hidden" value="@Model.Input.CustomerBalance" class="form-control" />
+                @if (Model.Input.CustomerBalance < Model.Input.Price)
+                {
+                    <i class="text-danger">Insuficient Funds. Consider making a deposit.</i>
+                }
                 <hr />
             </div>
             @if (Model.Input.Items != null)

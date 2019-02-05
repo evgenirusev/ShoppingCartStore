@@ -13,13 +13,15 @@ namespace ShoppingCartStore.Services.DataServices.Implementations
     class OrderService : BaseService<Order>, IOrderService
     {
         IItemService _itemService;
+        ICustomerService _customerService;
 
         public OrderService(IRepository<Order> repository, IMapper mapper
             , UserManager<Customer> userManager, IProductService productService
-            , IItemService itemService)
+            , IItemService itemService, ICustomerService customerService)
             : base(repository, mapper, userManager)
         {
             _itemService = itemService;
+            _customerService = customerService;
         }
 
         public async Task CreateAsync(string deliveryAddress, string orderNote

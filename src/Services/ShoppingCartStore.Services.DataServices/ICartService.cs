@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Http;
     using ShoppingCartStore.Common.ViewModels.Cart;
+    using ShoppingCartStore.Models;
     using System.Threading.Tasks;
 
     public interface ICartService
@@ -25,5 +26,7 @@
         Task RemoveItemFromCartAsync(string productId, string customerId, ISession session);
 
         Task RemoveItemFromSessionAsync(string productId, ISession session);
+
+        Task DeletePersistedCartByCustomerId(string customerId);
     }
 }

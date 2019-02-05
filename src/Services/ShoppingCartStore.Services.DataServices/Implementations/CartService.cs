@@ -168,6 +168,12 @@
             await this.Repository.SaveChangesAsync();
         }
 
+        public async Task DeletePersistedCartByCustomerId(string customerId)
+        {
+            var cart = this.GetCartEntityByCustomerId(customerId);
+            await this.DeletePersistedCart(cart);
+        }
+
         private Cart FindByUsername(string username)
         {
             return this.Repository.All()
