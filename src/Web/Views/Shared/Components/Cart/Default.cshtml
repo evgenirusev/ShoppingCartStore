@@ -4,7 +4,7 @@
     ViewData["Title"] = "My Cart";
 }
 
-<a asp-page="/Orders/Create">
+<a asp-controller="Cart" asp-action="Index">
     <div class="cart-badge badge-icons pull-right">
         <i class="fa fa-shopping-cart"></i>
         <span class="badge badge-danger rounded-x">@Model.ItemsCount</span>
