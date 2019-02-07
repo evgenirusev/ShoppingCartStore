@@ -13,7 +13,7 @@ Prerequisites
 Steps to run
 * Update the connection string in appsettings.json in ShoppingCartStore.Web
 * Build whole solution.
-* In Solution Explorer, make sure that SimplCommerce.WebHost is selected as the Startup Project
+* In Solution Explorer, make sure that ShoppingCartStore.Web is selected as the Startup Project
 * Open Package Manager Console Window & execute "Update-Database" then press "Enter". This action will create database schema.
 * In Visual Studio, press "Control + F5".
 
