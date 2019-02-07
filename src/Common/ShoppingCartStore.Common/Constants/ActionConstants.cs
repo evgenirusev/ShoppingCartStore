@@ -3,5 +3,7 @@
     public static class ActionConstants
     {
         public const string Index = "Index";
+        public const string Products = "Products";
+        public const string ProductExistsErrorPage = "ProductExistsErrorPage";
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCartStore.Common.BindingModels.Product;
+using ShoppingCartStore.Common.Constants;
 using ShoppingCartStore.Common.ViewModels.Product;
 using ShoppingCartStore.Services.DataServices;
 
@@ -46,7 +46,7 @@ namespace SoppingCartStore.Web.Controllers
         public async Task<IActionResult> Create(CreateProductBindingModel model)
         {
             await _productService.CreateAsync(model);
-            return this.RedirectToAction("Index", "Products");
+            return this.RedirectToAction(ActionConstants.Index, ControllerConstants.Products);
         }
 
         public async Task<IActionResult> Details(string id)

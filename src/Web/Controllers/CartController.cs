@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using ShoppingCartStore.Common.Constants;
     using ShoppingCartStore.Models;
     using ShoppingCartStore.Services.DataServices;
     using System.Threading.Tasks;
@@ -35,7 +36,7 @@
             }
 
             await _cartService.AddToSessionCartAsync(id, HttpContext.Session);
-            return this.RedirectToAction("Index", "Products");
+            return this.RedirectToAction(ActionConstants.Index, ActionConstants.Products);
         }
 
         public async Task<IActionResult> RemoveFromCart(string id)
@@ -43,7 +44,7 @@
             string customerId = _userManager
                 .FindByNameAsync(this.User.Identity.Name).Result.Id;
             await _cartService.RemoveItemFromCartAsync(id, customerId, HttpContext.Session);
-            return this.RedirectToPage("/Orders/Create");
+            return this.RedirectToPage(PageConstants.OrdersCreate);
         }
     }
 }

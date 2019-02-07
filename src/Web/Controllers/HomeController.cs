@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using ShoppingCartStore.Common.Constants;
 using ShoppingCartStore.Common.ViewModels;
 
 namespace SoppingCartStore.Web.Controllers
@@ -8,7 +9,7 @@ namespace SoppingCartStore.Web.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Products");
+            return RedirectToAction(ActionConstants.Index, ControllerConstants.Products);
         }
 
         public IActionResult Privacy()

@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using ShoppingCartStore.Common.BindingModels.CreditCard;
+    using ShoppingCartStore.Common.Constants;
     using ShoppingCartStore.Models;
     using ShoppingCartStore.Services.DataServices;
     using System.Threading.Tasks;
@@ -35,7 +36,7 @@
 
             await this.creditCardService.Create(model, this.User.Identity.Name);
 
-            return this.RedirectToAction("Index", "CreditCards");
+            return this.RedirectToAction(ActionConstants.Index, ControllerConstants.CreditCards);
         }
 
         public async Task<IActionResult> Index()

@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using ShoppingCartStore.Common.Constants;
     using ShoppingCartStore.Models;
     using ShoppingCartStore.Services.DataServices;
     using System.Threading.Tasks;
@@ -32,11 +33,11 @@
 
             if (await _wishlistService.DoesProductAlreadyExist(id, customerId))
             {
-                return this.RedirectToAction("ProductExistsErrorPage", "Wishlist");
+                return this.RedirectToAction(ActionConstants.ProductExistsErrorPage, ControllerConstants.Wishlist);
             }
 
             await _wishlistService.AddToWishlistAsync(id, customerId);
-            return this.RedirectToAction("Index", "Products");
+            return this.RedirectToAction(ActionConstants.Index, ControllerConstants.Products);
         }
 
         public IActionResult ProductExistsErrorPage()
