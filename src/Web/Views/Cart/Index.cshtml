@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "My Cart";
 }
+
 <!-- HEADER & SEARCH FORM -->
 <div class="d-flex justify-content-around">
     <div>
@@ -14,7 +15,7 @@
 </div>
 
 <hr class="bg-info h-2" />
-<form method="post" asp-page="/Orders/Create">
+<form method="post" asp-controller="Cart" asp-action="CreateOrder">
     <div class="row">
         <div class="col-md-8">
             @if (Model.Items != null)
@@ -74,6 +75,16 @@
             </div>
             <div class="col">
                 <p>Order Total: <i class="text-success">$@Model.Price</i></p>
+                <input asp-for="Price" type="hidden" value="@Model.Price" class="form-control" />
+                <hr />
+            </div>
+            <div class="col">
+                <p>Your Balance: <i class="text-success">$@Model.CustomerBalance</i></p>
+                <input asp-for="CustomerBalance" type="hidden" value="@Model.CustomerBalance" class="form-control" />
+                @if (Model.CustomerBalance < Model.Price)
+                {
+                    <i class="text-danger">Insuficient Funds. Consider making a deposit.</i>
+                }
                 <hr />
             </div>
             @if (Model.Items != null)
