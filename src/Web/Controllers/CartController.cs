@@ -75,7 +75,7 @@
             string customerId = _userManager
                 .FindByNameAsync(this.User.Identity.Name).Result.Id;
             await _cartService.RemoveItemFromCartAsync(id, customerId, HttpContext.Session);
-            return this.RedirectToPage(PageConstants.OrdersCreate);
+            return this.RedirectToAction(ActionConstants.Index, ActionConstants.Cart);
         }
     }
 }
