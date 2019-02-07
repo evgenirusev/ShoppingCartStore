@@ -4,10 +4,11 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using ShoppingCartStore.Common.BindingModels.Category;
+    using ShoppingCartStore.Common.Constants;
     using ShoppingCartStore.Services.DataServices;
     using System.Threading.Tasks;
 
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = RoleConstants.Administrator)]
     public class CreateModel : PageModel
     {
         private ICategoryService _categoryService;
@@ -29,7 +30,7 @@
 
             await _categoryService.CreateAsync(Input);
 
-            return this.RedirectToPage("/Categories/Success");
+            return this.RedirectToPage(PageConstants.CategoriesSuccess);
         }
     }
 }

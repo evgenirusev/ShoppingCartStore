@@ -6,6 +6,7 @@
     using AutoMapper;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using ShoppingCartStore.Common.Constants;
     using ShoppingCartStore.Common.ViewModels.Cart;
     using ShoppingCartStore.Data.Common.Repositories;
     using ShoppingCartStore.Models;
@@ -49,14 +50,14 @@
 
         public async Task AddToSessionCartAsync(string productId, ISession session)
         {
-            if (SessionHelper.GetObjectFromJson<int>(session, "productCount") == 0)
+            if (SessionHelper.GetObjectFromJson<int>(session, CartConstants.ProductCount) == 0)
             {
                 List<Item> cart = new List<Item>();
                 cart.Add(new Item(productId, 1));
-                SessionHelper.SetObjectAsJson(session, "cart", cart);
+                SessionHelper.SetObjectAsJson(session, CartConstants.Cart, cart);
 
                 // Initial product count
-                SessionHelper.SetObjectAsJson(session, "productCount", 1);
+                SessionHelper.SetObjectAsJson(session, CartConstants.ProductCount, 1);
             }
             else
             {
@@ -71,11 +72,11 @@
                     cart.Add(new Item(productId, 1));
                 }
 
-                SessionHelper.SetObjectAsJson(session, "cart", cart);
+                SessionHelper.SetObjectAsJson(session, CartConstants.Cart, cart);
 
                 // Incrementing the product counter
-                int productCount = SessionHelper.GetObjectFromJson<int>(session, "productCount");
-                SessionHelper.SetObjectAsJson(session, "productCount", productCount + 1);
+                int productCount = SessionHelper.GetObjectFromJson<int>(session, CartConstants.ProductCount);
+                SessionHelper.SetObjectAsJson(session, CartConstants.ProductCount, productCount + 1);
             }
         }
 
@@ -91,12 +92,12 @@
                 resultItems.Add(item);
             }
 
-            SessionHelper.SetObjectAsJson(session, "cart", resultItems);
+            SessionHelper.SetObjectAsJson(session, CartConstants.Cart, resultItems);
         }
 
         private int doesExist(string id, ISession session)
         {
-            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(session, CartConstants.Cart);
             for (int i = 0; i < cart.Count; i++)
             {
                 if (cart[i].ProductId.Equals(id))
@@ -109,7 +110,7 @@
 
         public int? GetProductCountFromSession(ISession session)
         {
-            int? count = SessionHelper.GetObjectFromJson<int>(session, "productCount");
+            int? count = SessionHelper.GetObjectFromJson<int>(session, CartConstants.ProductCount);
             if (count != 0)
             {
                 return count;
@@ -132,7 +133,7 @@
 
             string newDbCartId = await this.CreateCart(customer);
 
-            var cartItems = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
+            var cartItems = SessionHelper.GetObjectFromJson<List<Item>>(session, CartConstants.Cart);
 
             foreach(var item in cartItems)
             {
@@ -182,8 +183,8 @@
 
         public void ClearSessionCart(ISession session)
         {
-            SessionHelper.SetObjectAsJson(session, "cart", null);
-            SessionHelper.SetObjectAsJson(session, "productCount", 0);
+            SessionHelper.SetObjectAsJson(session, CartConstants.Cart, null);
+            SessionHelper.SetObjectAsJson(session, CartConstants.ProductCount, 0);
         }
 
         public async Task<int> GetPersistedCartProductCountAsync(string username, ISession session)
@@ -209,7 +210,7 @@
 
         public async Task ManageCartOnCustomerLoginAsync(ISession session, string username)
         {
-            var cartFromSession = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
+            var cartFromSession = SessionHelper.GetObjectFromJson<List<Item>>(session, CartConstants.Cart);
             if (cartFromSession != null)
             {
                 await MigrateSessionProductsAsync(username, session);
@@ -220,7 +221,7 @@
 
                 if (productCount != 0)
                 {
-                    SessionHelper.SetObjectAsJson(session, "productCount", productCount);
+                    SessionHelper.SetObjectAsJson(session, CartConstants.ProductCount, productCount);
 
                     var persistedCart = FindByUsername(username);
                     var persistedItems = await _itemService.AllByCartIdAsync(persistedCart.Id);
@@ -270,20 +271,20 @@
 
         public async Task RemoveItemFromSessionAsync(string productId, ISession session)
         {
-            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(session, "cart");
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(session, CartConstants.Cart);
 
             foreach (var item in cart)
             {
                 if (item.ProductId == productId)
                 {
                     cart.Remove(item);
-                    int productCount = SessionHelper.GetObjectFromJson<int>(session, "productCount");
-                    SessionHelper.SetObjectAsJson(session, "productCount", productCount -= item.Quantity);
+                    int productCount = SessionHelper.GetObjectFromJson<int>(session, CartConstants.ProductCount);
+                    SessionHelper.SetObjectAsJson(session, CartConstants.ProductCount, productCount -= item.Quantity);
                     break;
                 }
             }
 
-            SessionHelper.SetObjectAsJson(session, "cart", cart);
+            SessionHelper.SetObjectAsJson(session, CartConstants.Cart, cart);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShoppingCartStore.Common.BindingModels.Order;
+using ShoppingCartStore.Common.Constants;
 using ShoppingCartStore.Models;
 using ShoppingCartStore.Services.DataServices;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace SoppingCartStore.Web.Pages.Orders
 
             _cartService.ClearSessionCart(HttpContext.Session);
 
-            return this.RedirectToPage("/Orders/Success");
+            return this.RedirectToPage(PageConstants.OrdersSuccess);
         }
     }
 }

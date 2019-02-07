@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using ShoppingCartStore.Common.BindingModels.Withdraw;
+    using ShoppingCartStore.Common.Constants;
     using ShoppingCartStore.Models;
     using ShoppingCartStore.Services.DataServices;
 
@@ -34,7 +35,7 @@
             }
 
             await this._withdrawService.WithdrawFundsAsync(this.Input.WithdrawAmount, this.User.Identity.Name);
-            return this.RedirectToPage("/Withdraw/Success");
+            return this.RedirectToPage(PageConstants.WithdrawSuccess);
         }
     }
 }

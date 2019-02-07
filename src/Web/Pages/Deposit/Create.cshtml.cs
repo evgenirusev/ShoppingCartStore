@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using ShoppingCartStore.Common.BindingModels.Deposit;
+    using ShoppingCartStore.Common.Constants;
     using ShoppingCartStore.Common.ViewModels.CreditCard;
     using ShoppingCartStore.Models;
     using ShoppingCartStore.Services.DataServices;
@@ -61,7 +62,7 @@
 
             await this.depositService.CreateDepositAsync(this.Input, this.User.Identity.Name);
 
-            return this.RedirectToPage("/Deposit/Success");
+            return this.RedirectToPage(PageConstants.DepositSuccess);
         }
     }
 }

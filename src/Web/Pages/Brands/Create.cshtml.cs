@@ -4,10 +4,11 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using ShoppingCartStore.Common.BindingModels.Brand;
+    using ShoppingCartStore.Common.Constants;
     using ShoppingCartStore.Services.DataServices;
     using System.Threading.Tasks;
 
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = RoleConstants.Administrator)]
     public class CreateModel : PageModel
     {
         private IBrandService _brandService;
@@ -29,7 +30,7 @@
 
             await _brandService.CreateAsync(Input);
 
-            return this.RedirectToPage("/Brands/Success");
+            return this.RedirectToPage(PageConstants.BrandsSuccess);
         }
     }
 }
