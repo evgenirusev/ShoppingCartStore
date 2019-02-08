@@ -6,6 +6,7 @@
     using ShoppingCartStore.Common.BindingModels.Brand;
     using ShoppingCartStore.Common.BindingModels.Category;
     using ShoppingCartStore.Common.BindingModels.Product;
+    using ShoppingCartStore.Common.Constants;
     using ShoppingCartStore.Models;
     using ShoppingCartStore.Services.DataServices;
     using System.Collections.Generic;
@@ -19,8 +20,8 @@
 
         private static readonly IdentityRole[] roles =
         {
-            new IdentityRole("Administrator"),
-            new IdentityRole("User")
+            new IdentityRole(RoleConstants.Administrator),
+            new IdentityRole(RoleConstants.User)
         };
 
         public async static void SeedRolesAsync(this IApplicationBuilder app)
@@ -35,8 +36,9 @@
                 
                 foreach (var role in roles)
                 {
-                    // If you encounter a runtime exception here, simply execute
-                    // 'update-database' in the command line
+                    // If you encounter a runtime exception here, simply execute "update-database"
+                    // in the command line (Tools -> NuGet Package Manager -> Package Manager Console),
+                    // after the database initialization, the application will run successfully
                     if (!await roleManager.RoleExistsAsync(role.Name))
                     {
                         await roleManager.CreateAsync(role);
