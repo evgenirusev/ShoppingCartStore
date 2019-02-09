@@ -40,7 +40,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.RedirectToAction(ActionConstants.Index, ActionConstants.Cart);
+                return this.RedirectToAction(ActionConstants.Index, ControllerConstants.Cart);
             }
 
             var customer = _userManager
@@ -75,7 +75,7 @@
             string customerId = _userManager
                 .FindByNameAsync(this.User.Identity.Name).Result.Id;
             await _cartService.RemoveItemFromCartAsync(id, customerId, HttpContext.Session);
-            return this.RedirectToAction(ActionConstants.Index, ActionConstants.Cart);
+            return this.RedirectToAction(ActionConstants.Index, ControllerConstants.Cart);
         }
     }
 }

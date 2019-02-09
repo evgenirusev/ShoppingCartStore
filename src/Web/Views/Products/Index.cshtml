@@ -31,7 +31,7 @@
                     <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 text-center mb-5">
                         <div class="thumbnail">
                             <div class="caption">
-                                <a asp-action="Details" asp-route-id="@product.Id" asp-controller="Products">
+                                <a asp-action="@ActionConstants.Details" asp-route-id="@product.Id" asp-controller="@ControllerConstants.Products">
                                     @if (@product.ImageURI != null)
                                     {
                                         <img src="@product.ImageURI" class="product-image">
@@ -41,7 +41,7 @@
                                         <img src="http://www.indiantradebird.in/images/noimage.jpg" class="product-image">
                                     }
                                 </a>
-                                <a asp-action="Details" asp-route-id="@product.Id" asp-controller="Products">
+                                <a asp-action="@ActionConstants.Details" asp-route-id="@product.Id" asp-controller="@ControllerConstants.Products">
                                     <h5 class="mt-2 text-dark">@product.Name</h5>
                                     <i class="text-dark d-block">$@product.Price</i>
                                     View
