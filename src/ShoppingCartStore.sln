@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoppingCartStore.Web", "Web\SoppingCartStore.Web.csproj", "{A3C83C58-216E-4AD6-A424-BB0D233DF747}"
 EndProject
@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{467DB6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCartStore.Data", "Data\ShoppingCartStore.Data\ShoppingCartStore.Data.csproj", "{C7F8F786-BCAC-45EA-8573-F3E31D39D2AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartStore.Common", "Common\ShoppingCartStore.Common\ShoppingCartStore.Common.csproj", "{A1B803AB-DE49-43AC-BC1A-51F79BB492B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCartStore.Common", "Common\ShoppingCartStore.Common\ShoppingCartStore.Common.csproj", "{A1B803AB-DE49-43AC-BC1A-51F79BB492B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartStore.Models", "Data\ShoppingCartStore.Models\ShoppingCartStore.Models.csproj", "{A10960EC-BEF6-43AF-B7F2-B892783D714D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCartStore.Models", "Data\ShoppingCartStore.Models\ShoppingCartStore.Models.csproj", "{A10960EC-BEF6-43AF-B7F2-B892783D714D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartStore.Services.DataServices", "Services\ShoppingCartStore.Services.DataServices\ShoppingCartStore.Services.DataServices.csproj", "{A1172D0B-79E1-4E06-B3CB-0D99CA7AA03B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCartStore.Services.DataServices", "Services\ShoppingCartStore.Services.DataServices\ShoppingCartStore.Services.DataServices.csproj", "{A1172D0B-79E1-4E06-B3CB-0D99CA7AA03B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingCartStore.Data.Common", "Data\ShoppingCartStore.Data.Common\ShoppingCartStore.Data.Common.csproj", "{E455EE81-4693-4FCB-9DEF-33907461E989}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingCartStore.Data.Common", "Data\ShoppingCartStore.Data.Common\ShoppingCartStore.Data.Common.csproj", "{E455EE81-4693-4FCB-9DEF-33907461E989}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

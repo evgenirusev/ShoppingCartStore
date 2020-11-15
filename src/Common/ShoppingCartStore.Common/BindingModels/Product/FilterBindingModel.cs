@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+#region
 
 namespace ShoppingCartStore.Common.BindingModels.Product
 {
