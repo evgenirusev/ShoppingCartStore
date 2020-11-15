@@ -23,5 +23,5 @@ Steps to run
 * ASP.NET Identity Core 2.2
 
 ![Sorry, error loading image of diagram](Homepage.png)
-![Sorry, error loading image of diagram](Purchase.png)
+![Sorry, error loading image of diagram](Checkout.png)
 ![Sorry, error loading image of diagram](Product.png)
