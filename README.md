@@ -3,7 +3,7 @@
 Online eCommerse digital shopping cart application implementing a monolithic application architecture.
 
 ## Database Schema:
-![Sorry, error loading image of diagram](./DBDiagram)
+![Sorry, error loading image of diagram](DBDiagram.png)
 
 ## Visual Studio 2017 and SQL Server
 Prerequisites
@@ -22,6 +22,6 @@ Steps to run
 * Entity Framework Core 2.2
 * ASP.NET Identity Core 2.2
 
-![Sorry, error loading image of diagram](./Homepage)
-![Sorry, error loading image of diagram](./Purchase)
-![Sorry, error loading image of diagram](./Product)
+![Sorry, error loading image of diagram](Homepage.png)
+![Sorry, error loading image of diagram](Purchase.png)
+![Sorry, error loading image of diagram](Product.png)
