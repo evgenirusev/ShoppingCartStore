@@ -22,6 +22,11 @@ Steps to run
 * Entity Framework Core 2.2
 * ASP.NET Identity Core 2.2
 
+## Product List View
 ![Sorry, error loading image of diagram](Homepage.png)
+
+## Order Summary View
 ![Sorry, error loading image of diagram](Checkout.png)
+
+## Product Description View
 ![Sorry, error loading image of diagram](Product.png)
