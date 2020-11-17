@@ -11,12 +11,10 @@ namespace SoppingCartStore.Web.Controllers
     public class ProductsController : Controller
     {
         private IProductService _productService;
-        private ICartService _cartService;
 
-        public ProductsController(ICartService cartService, IProductService productService)
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
-            _cartService = cartService;
         }
 
         public IActionResult Index(FilterBindingModel model)
