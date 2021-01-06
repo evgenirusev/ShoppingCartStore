@@ -1,6 +1,6 @@
 # ShoppingCartStore
 
-Online eCommerse digital shopping cart application implementing a monolithic application architecture.
+.NET Core Online eCommerse digital shopping cart application implementing a monolithic application architecture.
 
 ## Database Schema:
 ![Sorry, error loading image of diagram](DBDiagram.png)
@@ -30,3 +30,6 @@ Steps to run
 
 ## Product Description View
 ![Sorry, error loading image of diagram](Product.png)
+
+(Keywords for SEO purposes)
+.NET Core Store, .NET Core MVC, .NET Core Shopping Cart, .NET Core Store, Entity Framework
